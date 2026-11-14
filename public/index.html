@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Hook &amp; Link</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff8ec;--card:#fff;--ink:#2b2a33;--mut:#6b6a75;--pri:#ff7a45;--g:#e3f7e7;--gb:#2e9e4f;--o:#fff3d1;--ob:#d99a00;--b:#fde2e2;--bb:#d64545;--ln:#f0dfc4}
+@media (prefers-color-scheme:dark){:root{--bg:#1e1c24;--card:#2a2833;--ink:#f3f1f7;--mut:#b4b1c0;--g:#1d3a27;--o:#463a14;--b:#4a2323;--ln:#403d4d}}
+*,*:before,*:after{box-sizing:inherit}body{margin:0;background:var(--bg);color:var(--ink);font:1.05rem/1.6 system-ui,sans-serif;overflow-x:hidden}
+body.easy{font-family:"Atkinson Hyperlegible","Trebuchet MS",Verdana,sans-serif;letter-spacing:.03em;word-spacing:.12em;line-height:1.85}body.big{font-size:1.3rem}
+header{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;padding:.6rem 1rem;border-bottom:2px solid var(--ln)}header b{flex:1;font-size:1.2rem}
+main{max-width:46rem;margin:0 auto;padding:1rem}h1,h2{margin:.2em 0 .5em;line-height:1.25}h1:focus,h2:focus{outline:3px solid var(--pri)}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:2px solid var(--ln);background:var(--card);border-radius:.7rem;padding:.5rem .9rem}
+button.pri{background:var(--pri);border-color:var(--pri);color:#2b1a10;font-weight:700}button:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px}input{padding:.5rem;border:2px solid var(--ln);border-radius:.6rem;background:var(--card);width:100%;margin:.2rem 0 .6rem}
+.card{background:var(--card);border:2px solid var(--ln);border-radius:1rem;padding:1rem;margin:.8rem 0}.doors{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.door{text-align:left;padding:1rem}.door b{font-size:1.25rem;display:block}.row{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}.err{color:var(--bb);font-weight:700}
+.story p{margin:.6em 0}.tk{display:inline;border:0;border-bottom:3px dotted var(--pri);background:none;border-radius:.2rem;padding:0 .1rem;font-weight:inherit;line-height:inherit;text-align:left}
+.tk[aria-pressed=true]{background:var(--o);border-bottom:3px solid var(--ob)}.tk.hk{background:var(--g);border-bottom:3px solid var(--gb)}.tk.md{background:var(--o);border-bottom:3px solid var(--ob)}.tk.nn{background:var(--b);border-bottom:3px solid var(--bb)}.tk.me{background:#e9e2ff;border-bottom:3px solid #6b4fd8}
+.mem{background:var(--o);border:2px solid var(--ob);border-radius:1rem;padding:.7rem 1rem}.fb{border-left:6px solid var(--ln);padding:.3rem .8rem;margin:.6rem 0}.fb.good{border-color:var(--gb);background:var(--g)}.fb.mid{border-color:var(--ob);background:var(--o)}.fb.bad{border-color:var(--bb);background:var(--b)}
+.kinds button[aria-pressed=true]{background:var(--o);border-color:var(--ob)}small,.mut{color:var(--mut)}dialog{max-width:34rem;border:3px solid var(--pri);border-radius:1rem;background:var(--card);color:var(--ink)}
+</style></head><body>
+<header><b>🪝 Hook &amp; Link</b><button id="cb">📖 Cheat card</button><button id="ez" aria-pressed="false">Easy-read font</button><button id="bg" aria-pressed="false">Bigger text</button><button id="lo" hidden>Log out</button></header>
+<main id="m"></main>
+<dialog id="ch" aria-labelledby="cht"><h2 id="cht">Cheat card</h2>
+<p><b>Hook (trigger):</b> what pulls a character from now into a memory. A smell, sound, taste, touch, or a personal object is a strong hook. Example: the smell of roasted chestnuts pulls Mei back to rainy days with Grandpa.</p>
+<p><b>Link:</b> a detail that ties the memory back to the story outside it. Four kinds:</p>
+<ul><li><b>Same object</b>: the torn bag in both scenes.</li><li><b>Same action</b>: hiding a mistake, then hiding it again.</li><li><b>Same feeling</b>: scared then, scared now.</li><li><b>Same words</b>: a line from the memory that the character says later.</li></ul>
+<p><b>Rankings:</b> 🌟 Ideal = a personal object or sense, noticed just when the character must choose, with a link that carries the lesson. 👍 Good = a real hook, but weaker timing or a less central memory. 🙂 Workable = it can work, but the hook is broad (a place) or the link is only a feeling.</p>
+<button class="pri" id="cc">Close</button></dialog>
+<script>
+const $=id=>document.getElementById(id),M=$('m');let T,U,P={};
+try{T=localStorage.getItem('hl_tok');U=localStorage.getItem('hl_usr');P=JSON.parse(localStorage.getItem('hl_p')||'{}')}catch(e){}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function api(p,b){const r=await fetch(p,{method:b?'POST':'GET',headers:{'content-type':'application/json',...(T?{authorization:'Bearer '+T}:{})},body:b?JSON.stringify(b):undefined});const d=await r.json().catch(()=>({}));if(r.status===401&&T){out();throw new Error('Please log in again')}if(!r.ok)throw new Error(d.error||'Something went wrong');return d}
+function pf(){document.body.classList.toggle('easy',!!P.e);document.body.classList.toggle('big',!!P.b);$('ez').setAttribute('aria-pressed',!!P.e);$('bg').setAttribute('aria-pressed',!!P.b);try{localStorage.setItem('hl_p',JSON.stringify(P))}catch(e){}}
+$('ez').onclick=()=>{P.e=!P.e;pf()};$('bg').onclick=()=>{P.b=!P.b;pf()};$('cb').onclick=()=>$('ch').showModal();$('cc').onclick=()=>$('ch').close();$('lo').onclick=out;pf();
+function out(){T=null;try{localStorage.removeItem('hl_tok')}catch(e){}login()}
+function show(h){M.innerHTML=h;const e=M.querySelector('h1,h2');if(e){e.tabIndex=-1;e.focus()}$('lo').hidden=!T}
+function login(){show(`<h1>Log in</h1><div class="card"><label for="u">Username</label><input id="u" autocomplete="username"><label for="p">PIN (4-8 digits)</label><input id="p" type="password" inputmode="numeric" autocomplete="current-password"><label for="c">Class, for example 4A (new players)</label><input id="c"><p class="err" id="e" role="alert"></p><div class="row"><button class="pri" id="li">Log in</button><button id="rg">New player</button></div></div>`);
+ const go=async k=>{try{const d=await api(k,{username:$('u').value,pin:$('p').value,class:$('c').value});T=d.token;U=d.username;try{localStorage.setItem('hl_tok',T);localStorage.setItem('hl_usr',U)}catch(e){}home()}catch(e){$('e').textContent=e.message}};$('li').onclick=()=>go('/api/login');$('rg').onclick=()=>go('/api/register')}
+const ST=n=>'⭐'.repeat(n)+'☆'.repeat(3-n);
+async function home(mode){
+ if(!mode){show(`<h1>Hello, ${esc(U||'')}!</h1><div class="doors"><button class="card door" id="dh"><b>🔍 Spot the Hook</b>Read a story. Tap the three places where a flashback could begin. Tap the best one first.</button><button class="card door" id="dl"><b>🔗 Make the Link</b>See a memory. Tap the detail that ties it back to the story, then name the link.</button></div>`);$('dh').onclick=()=>home('hook');$('dl').onclick=()=>home('link');return}
+ const d=await api('/api/hl/stories'),s=n=>(d.stars.find(x=>x.mode===mode&&x.story===n)||{stars:0}).stars;
+ show(`<h1>${mode==='hook'?'Spot the Hook':'Make the Link'}</h1><p class="mut">Pick a story. Nothing is locked. Stars keep your best try.</p>${d.stories.map((x,i)=>`<button class="card door" data-id="${x.id}" style="width:100%"><b>Story ${i+1} of ${d.stories.length}: ${esc(x.title)}</b><span aria-label="${s(x.id)} of 3 stars">${ST(s(x.id))}</span></button>`).join('')}<button id="bk">← Back</button>`);
+ M.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>mode==='hook'?hook(b.dataset.id):link(b.dataset.id));$('bk').onclick=()=>home()}
+function render(t,o={}){return t.split('\n\n').map(p=>'<p>'+esc(p).replace(/\[(t\d+)\|([^\]]+)\]/g,(_,id,x)=>{const c=o.c&&o.c[id]||'';const pr=o.on&&o.on.includes(id);const n=o.n&&o.n[id]||'';return `<button class="tk ${c}" data-t="${id}" aria-pressed="${!!pr}"${o.off?' disabled':''}>${n?`<sup>${n}</sup>`:''}${x}</button>`})+'</p>').join('')}
+const READ=t=>`<button id="ra">🔊 Read aloud</button>`;function ra(t){$('ra').onclick=()=>{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t.replace(/\[t\d+\|([^\]]+)\]/g,'$1')))}}
+const RK={1:['🌟','Ideal'],2:['👍','Good'],3:['🙂','Workable']};
+async function hook(id){
+ const st=await api('/api/hl/story/'+id);let taps=[];
+ const draw=()=>{show(`<h1>${esc(st.title)}</h1><p><b>Find three hooks (triggers).</b> Tap the places that could pull the character into a memory. Tap the strongest first. <small>Tapped: ${taps.length} of 3</small></p><div class="card story" id="sy">${render(st.text,{on:taps,n:Object.fromEntries(taps.map((t,i)=>[t,i+1]))})}</div><div class="row"><button class="pri" id="ck" ${taps.length?'':'disabled'}>Check</button><button id="rs">Start again</button>${READ()}<button id="bk">← Stories</button></div><p class="err" id="er" role="alert"></p>`);
+  M.querySelectorAll('.tk').forEach(b=>b.onclick=()=>{const t=b.dataset.t,i=taps.indexOf(t);if(i>=0)taps.splice(i,1);else if(taps.length<3)taps.push(t);draw();const nb=M.querySelector(`[data-t="${t}"]`);if(nb)nb.focus()});
+  $('rs').onclick=()=>{taps=[];draw()};$('bk').onclick=()=>home('hook');ra(st.text);$('ck').onclick=async()=>{try{done(await api('/api/hl/check-hook',{story:id,taps}))}catch(e){$('er').textContent=e.message}}};
+ const done=r=>{const c={},n={};r.res.forEach(x=>{c[x.t]=x.r==='hook'?'hk':'nn'});r.areas.forEach(a=>{if(!c[a.t]){c[a.t]='md';}n[a.t]=RK[a.rank][0]});
+  const f=r.res.map(x=>x.r==='hook'?`<div class="fb ${x.rank===1?'good':'mid'}"><b>${RK[x.rank][0]} ${RK[x.rank][1]} hook</b> (you chose it ${['first','second','third'][x.mine-1]}). ${esc(x.why)} ${esc(x.wr)}</div>`:`<div class="fb bad"><b>❌ Not a hook.</b> ${esc(x.why)}</div>`).join('');
+  const miss=r.areas.filter(a=>!r.res.some(x=>x.t===a.t)).map(a=>`<div class="fb mid"><b>🔍 Missed: ${RK[a.rank][0]} ${RK[a.rank][1]} hook.</b> ${esc(a.why)} ${esc(a.wr)}</div>`).join('');
+  show(`<h1>${ST(r.stars)} ${esc(st.title)}</h1><div class="card story">${render(st.text,{c,n,off:1})}</div><h2 tabindex="-1">Feedback</h2>${f}${miss}<p class="mut">The ranking is: ${r.areas.map(a=>RK[a.rank][0]+' '+RK[a.rank][1]).join(', then ')}.</p><div class="row"><button class="pri" id="ag">Try again</button><button id="bk">← Stories</button></div>`);$('ag').onclick=()=>{taps=[];draw()};$('bk').onclick=()=>home('hook')};
+ draw()}
+async function link(id){
+ const st=await api('/api/hl/story/'+id+'/link');let i=0,tap=null,kind=null;const K={object:'Same object',action:'Same action',feeling:'Same feeling',words:'Same words'};
+ const draw=()=>{const a=st.areas[i];show(`<h1>${esc(st.title)}: link ${i+1} of 3</h1><div class="mem"><b>Memory waiting:</b> ${esc(a.memory)}</div><p>The hook (🪝) opened this memory. <b>Tap the detail in the story where this memory ties back.</b> Then choose the kind of link.</p><div class="card story">${render(st.text,{on:tap?[tap]:[],c:{[a.hook]:'me'},n:{[a.hook]:'🪝'}})}</div><div class="kinds row" role="group" aria-label="Kind of link">${Object.entries(K).map(([k,v])=>`<button data-k="${k}" aria-pressed="${kind===k}">${v}</button>`).join('')}</div><div class="row"><button class="pri" id="ck" ${tap&&kind?'':'disabled'}>Check</button>${READ()}<button id="bk">← Stories</button></div><p class="err" id="er" role="alert"></p>`);
+  M.querySelectorAll('.tk').forEach(b=>b.onclick=()=>{if(b.dataset.t===a.hook)return;tap=b.dataset.t;draw();M.querySelector(`[data-t="${tap}"]`).focus()});M.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{kind=b.dataset.k;draw();M.querySelector(`[data-k="${kind}"]`).focus()});
+  $('bk').onclick=()=>home('link');ra(st.text);$('ck').onclick=async()=>{try{res(await api('/api/hl/check-link',{story:id,area:a.area,tap,kind}))}catch(e){$('er').textContent=e.message}}};
+ const res=r=>{const a=st.areas[i],last=i===2;const m={ok:['good','✅ Correct pair and kind.'],kind:['mid','⚠️ Right detail, different kind.'],no:['bad','❌ Not a link.']}[r.r];
+  show(`<h1>${esc(st.title)}: link ${i+1} of 3</h1><div class="mem"><b>Memory:</b> ${esc(a.memory)}</div><div class="card story">${render(st.text,{c:{[a.hook]:'me',[r.ans]:'hk',...(tap!==r.ans?{[tap]:'nn'}:{})},n:{[a.hook]:'🪝',[r.ans]:'🔗'},off:1})}</div><div class="fb ${m[0]}"><b>${m[1]}</b> ${esc(r.why)}</div><p>${RK[r.rank][0]} <b>${RK[r.rank][1]} area.</b> ${esc(r.wr)}</p><div class="row">${r.r==='ok'?'':'<button id="rt">Try again</button>'}<button class="pri" id="nx">${last?'Finish':'Next link'}</button></div>`);
+  $('rt')&&($('rt').onclick=()=>{tap=null;kind=null;draw()});$('nx').onclick=async()=>{tap=null;kind=null;if(!last){i++;draw();return}try{fin(await api('/api/hl/link-finish',{story:id}))}catch(e){i=0;draw();$('er').textContent=e.message}}};
+ const fin=r=>{show(`<h1>${ST(r.stars)} ${esc(st.title)} finished</h1><p>The three hook-and-link areas, ranked:</p>${r.areas.map(a=>`<div class="fb ${a.rank===1?'good':'mid'}"><b>${RK[a.rank][0]} ${RK[a.rank][1]}:</b> the hook "${esc(a.hook)}". ${esc(a.wr)}</div>`).join('')}<div class="row"><button class="pri" id="ag">Try again</button><button id="bk">← Stories</button></div>`);$('ag').onclick=()=>{i=0;draw()};$('bk').onclick=()=>home('link')};
+ draw()}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('ch').open)$('ch').close()});
+T?home().catch(login):login();
+</script></body></html>

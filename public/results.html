@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Hook &amp; Link results</title><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;--bg:#fff8ec;--card:#fff;--ink:#2b2a33;--mut:#6b6a75;--pri:#ff7a45;--ln:#f0dfc4;--bb:#d64545}
+@media (prefers-color-scheme:dark){:root{--bg:#1e1c24;--card:#2a2833;--ink:#f3f1f7;--mut:#b4b1c0;--ln:#403d4d}}
+*{box-sizing:inherit}body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.5 system-ui,sans-serif}main{max-width:70rem;margin:0 auto;padding:1rem}
+.card{background:var(--card);border:2px solid var(--ln);border-radius:1rem;padding:1rem;margin:.8rem 0;overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid var(--ln);padding:.35rem .5rem;text-align:left;white-space:nowrap}th{font-size:.85rem}
+input,select,button{font:inherit;color:inherit;padding:.45rem .7rem;border:2px solid var(--ln);border-radius:.6rem;background:var(--card);margin:.2rem 0}button{cursor:pointer}button.pri{background:var(--pri);border-color:var(--pri);color:#2b1a10;font-weight:700}
+.err{color:var(--bb);font-weight:700}.mut{color:var(--mut)}:focus-visible{outline:3px solid var(--pri);outline-offset:2px}h1:focus,h2:focus{outline:3px solid var(--pri)}
+</style></head><body><main id="m"></main><script>
+const $=id=>document.getElementById(id),M=$('m');let T=null,D=null,F='';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function api(p,b){const r=await fetch('/api/admin/'+p,{method:b?'POST':'GET',headers:{'content-type':'application/json',...(T?{authorization:'Bearer '+T}:{})},body:b?JSON.stringify(b):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'Error');return d}
+function foc(){const h=M.querySelector('h1');h.tabIndex=-1;h.focus()}
+function login(m){M.innerHTML=`<h1>Hook &amp; Link: teacher results</h1><div class="card"><label for="u">Username</label><br><input id="u" autocomplete="username"><br><label for="p">Password</label><br><input id="p" type="password" autocomplete="current-password"><p class="err" id="e" role="alert">${esc(m||'')}</p><button class="pri" id="go">Log in</button></div>`;foc();
+ $('go').onclick=async()=>{try{const d=await api('login',{user:$('u').value,password:$('p').value});T=d.token;try{sessionStorage.setItem('tt',T);sessionStorage.setItem('tr',d.role||'');sessionStorage.setItem('tw',d.name||'')}catch(e){}load()}catch(e){$('e').textContent=e.message}}}
+async function load(){try{D=await api('hl-results')}catch(e){return login(e.message)}draw()}
+const S=n=>n?'⭐'.repeat(n)+` <span class="mut">${n}/3</span>`:'<span class="mut">–</span>';
+function draw(){const cl=[...new Set(D.pupils.map(p=>p.class||'(none)'))].sort(),ps=D.pupils.filter(p=>!F||(p.class||'(none)')===F);
+ const avg=(m,id)=>{const v=ps.map(p=>p[m][id]).filter(Boolean);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)+` (${v.length} pupils)`:'–'};
+ const tbl=m=>`<div class="card"><h2>${m==='hook'?'Spot the Hook':'Make the Link'}: stars per story</h2><table><tr><th>Pupil</th><th>Class</th>${D.stories.map(s=>`<th>${esc(s.title)}</th>`).join('')}</tr>${ps.map(p=>`<tr><td>${esc(p.username)}</td><td>${esc(p.class)}</td>${D.stories.map(s=>`<td>${S(p[m][s.id])}</td>`).join('')}</tr>`).join('')||'<tr><td>No pupils yet.</td></tr>'}<tr><th colspan="2">Class average</th>${D.stories.map(s=>`<th>${avg(m,s.id)}</th>`).join('')}</tr></table></div>`;
+ const tt=id=>esc((D.stories.find(s=>s.id===id)||{}).title);
+ const mk=D.mistakes.filter(x=>!F||1).map(x=>`<tr><td>${x.mode==='hook'?'Spot the Hook':'Make the Link'}</td><td>${tt(x.story)}</td><td>"${esc(x.text)}"</td><td>${esc(x.kind)}</td><td>${x.n} taps, ${x.pupils} pupils</td></tr>`).join('');
+ const kd=D.kinds.map(x=>`<tr><td>${tt(x.story)}</td><td>"${esc(x.text)}"</td><td>${x.n} times, ${x.pupils} pupils</td></tr>`).join('');
+ M.innerHTML=`<h1>Hook &amp; Link: teacher results</h1><div class="card"><label for="cf">Class </label><select id="cf"><option value="">All my classes</option>${cl.map(c=>`<option ${c===F?'selected':''}>${esc(c)}</option>`).join('')}</select> <button id="csv">Download CSV</button> <button id="lo">Log out</button> <a href="/teacher.html">← Teacher dashboard</a></div>${tbl('hook')}${tbl('link')}
+ <div class="card"><h2>Details pupils tap most by mistake</h2><p class="mut">Counts cover all pupils in your classes, all attempts.</p><table><tr><th>Game</th><th>Story</th><th>Detail</th><th>Mistake</th><th>How often</th></tr>${mk||'<tr><td>No mistakes recorded yet.</td></tr>'}</table></div>
+ <div class="card"><h2>Right detail, wrong kind of link</h2><table><tr><th>Story</th><th>Detail</th><th>How often</th></tr>${kd||'<tr><td>None recorded yet.</td></tr>'}</table></div>`;foc();
+ $('cf').onchange=e=>{F=e.target.value;draw()};$('lo').onclick=()=>{T=null;D=null;try{sessionStorage.clear()}catch(e){}login()};
+ $('csv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const rows=[['pupil','class','mode',...D.stories.map(s=>s.title)]];ps.forEach(p=>['hook','link'].forEach(m=>rows.push([p.username,p.class,m,...D.stories.map(s=>p[m][s.id]||'')])));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(q).join(',')).join('\n')],{type:'text/csv'}));a.download='hook-and-link-results.csv';a.click()}}
+try{T=sessionStorage.getItem('tt')}catch(e){}
+T?load():login();
+</script></body></html>
