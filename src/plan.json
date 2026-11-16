@@ -1,0 +1,85 @@
+{
+  "shapes": {
+    "mountain": {
+      "name": "Story mountain",
+      "icon": "⛰️",
+      "intro": "A story mountain has five parts. The story climbs up to the big problem, then comes down.",
+      "parts": [
+        { "n": "Opening", "t": "Meet the character and the place. Show what a normal day is like." },
+        { "n": "Build-up", "t": "Something starts to happen. Small problems begin and the story climbs." },
+        { "n": "Problem", "t": "The top of the mountain. The biggest problem or scariest moment. The character must choose what to do." },
+        { "n": "Resolution", "t": "The character solves the problem or learns something." },
+        { "n": "Ending", "t": "Show how things are now. How does the character feel?" }
+      ],
+      "pts": [[40, 200], [170, 130], [300, 40], [430, 130], [560, 200]],
+      "hooks": [1],
+      "links": [2, 3],
+      "cuts": [0.15, 0.5, 0.65, 0.88],
+      "fit": "Hooks usually sit in the build-up, before the problem. Links come at the problem and when it is solved."
+    },
+    "arc": {
+      "name": "8-point story arc",
+      "icon": "🌀",
+      "intro": "The 8-point arc has eight steps. The character wants something, makes a hard choice, and changes.",
+      "parts": [
+        { "n": "Stasis", "t": "A normal day. Nothing has changed yet." },
+        { "n": "Trigger", "t": "Something happens that stops the normal day and starts the story." },
+        { "n": "The Quest", "t": "The character goes after a goal. Small problems get in the way." },
+        { "n": "The Surprise", "t": "Something unexpected happens. Now it is harder." },
+        { "n": "Critical Choice", "t": "A hard choice. What the character picks shows what matters to them." },
+        { "n": "Climax", "t": "The biggest, most exciting moment of the story." },
+        { "n": "Reversal", "t": "What happens because of the climax. Something changes for good." },
+        { "n": "Resolution", "t": "A new normal. The character and the world are different now." }
+      ],
+      "pts": [[40, 190], [115, 160], [190, 135], [265, 95], [340, 140], [415, 40], [490, 110], [560, 160]],
+      "hooks": [1, 2, 3],
+      "links": [4, 5, 6],
+      "cuts": [0.1, 0.2, 0.32, 0.45, 0.58, 0.7, 0.85],
+      "fit": "Hooks usually sit between the trigger and the surprise. Links come at the critical choice, the climax and the reversal."
+    }
+  },
+  "practice": [
+    {
+      "id": "p1",
+      "title": "Mei and the Red Hat",
+      "mountain": [
+        "Mei walks to school on a calm morning in her new red hat.",
+        "A strong wind lifts the hat off her head and it floats away.",
+        "The hat lands on a high branch. Mei cannot reach it.",
+        "Mei asks the caretaker for help and he fetches a ladder.",
+        "Mei smiles and holds her hat tight all the way to class."
+      ],
+      "arc": [
+        "Mei walks to school on a calm morning in her new red hat.",
+        "A strong wind lifts the hat off her head.",
+        "Mei chases the hat down the road, past the shops.",
+        "The hat lands on a high branch, far out of reach.",
+        "Mei must choose: climb the tree alone or ask a grown-up for help.",
+        "She asks the caretaker and he holds the ladder while she reaches up.",
+        "Mei grabs the hat and learns that asking for help is brave.",
+        "Mei wears her hat tight, and now she knows she can ask for help."
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "Sam's Sports Day",
+      "mountain": [
+        "Sam wakes up excited for Sports Day at his school.",
+        "At the start line, his shoelace comes undone.",
+        "Halfway round the track, Sam trips and falls.",
+        "Sam gets up, ties his lace and keeps running.",
+        "Sam finishes last but proud, and his friends cheer."
+      ],
+      "arc": [
+        "Sam wakes up excited for Sports Day at his school.",
+        "At the start line, his shoelace comes undone.",
+        "He ties it fast and runs hard to catch up with the others.",
+        "Halfway round, a girl drops her water bottle right in front of him.",
+        "Sam must choose: stop to help or keep running to win.",
+        "He stops, picks up the bottle and hands it back to her.",
+        "Sam finishes last, but she thanks him and the crowd cheers.",
+        "Sam goes home proud. He knows kindness matters more than a medal."
+      ]
+    }
+  ]
+}
