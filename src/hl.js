@@ -1,4 +1,4 @@
-// Hook & Link API (v0.3). Scoring is server-side; roles, ranks and reasons are sent only after a check.
+// Hook & Link API (v0.7). Scoring is server-side; roles, ranks and reasons are sent only after a check.
 import B from './scenes.json';
 import PLAN from './plan.json';
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });
@@ -69,7 +69,8 @@ async function plan(m, path, b, DB, pid) {
 }
 
 const NAMES = { ha: 'Hook A', hb: 'Hook B', hc: 'Hook C', la: 'Link A', lb: 'Link B', lc: 'Link C', x1: 'Decoy 1', x2: 'Decoy 2' };
-const LAB = { memory: 'Memory', wh: 'Why it is a hook', wr: 'Why this rank', wl: 'Why it is a link' };
+const LAB = { memory: 'Memory', line: 'One-line memory', wh: 'Why it is a hook', wr: 'Why this rank', wl: 'Why it is a link' };
+const WHOLE = { present: 'Present story', hook: 'Hook', flashback: 'Flashback', back: 'Link back' };
 const wc = s => s.trim().split(/\s+/).filter(Boolean).length;
 export function validate(r) {
   const e = []; r = r || {};
@@ -86,14 +87,18 @@ export function validate(r) {
     const a = A.find(x => x && x.area === l) || {}, rank = +a.rank, kind = String(a.kind || ''), U = l.toUpperCase(), f = {};
     if (![1, 2, 3].includes(rank)) e.push(`Area ${U}: choose a rank.`); else ranks.push(rank);
     if (!KINDS.includes(kind)) e.push(`Area ${U}: choose the kind of link.`);
-    for (const k of ['memory', 'wh', 'wr', 'wl']) { f[k] = String(a[k] || '').trim(); if (f[k].length < 8 || f[k].length > 400) e.push(`Area ${U}: "${LAB[k]}" needs 8 to 400 characters.`); }
+    for (const k of ['memory', 'line', 'wh', 'wr', 'wl']) { f[k] = String(a[k] || '').trim(); const max = k === 'line' ? 140 : 400; if (f[k].length < 8 || f[k].length > max) e.push(`Area ${U}: "${LAB[k]}" needs 8 to ${max} characters.`); }
     if (pos['h' + l] !== undefined && pos['l' + l] !== undefined && pos['h' + l] > pos['l' + l]) e.push(`Area ${U}: the hook must come before its link in the story.`);
     areas.push({ area: l, rank, hook: 'h' + l, link: 'l' + l, kind, ...f });
   }
   if (ranks.length === 3 && new Set(ranks).size !== 3) e.push('Use each rank once: 1 Ideal, 2 Good, 3 Workable.');
   const D = r.decoys || {}, decoys = {};
   for (const k of ['x1', 'x2']) { decoys[k] = String(D[k] || '').trim(); if (decoys[k].length < 8 || decoys[k].length > 200) e.push(`${NAMES[k]}: explain why it is not a hook (8 to 200 characters).`); }
-  return { errors: e, story: { title, text, areas, decoys } };
+  // Optional model story for the ideal area: present story, hook, flashback, link back. All four or none.
+  const Wr = r.whole || {}, whole = {}, filled = Object.keys(WHOLE).filter(k => String(Wr[k] || '').trim());
+  if (filled.length) for (const k of Object.keys(WHOLE)) { whole[k] = String(Wr[k] || '').trim(); if (whole[k].length < 20 || whole[k].length > 700) e.push(`Whole story: "${WHOLE[k]}" needs 20 to 700 characters (fill in all four parts, or leave all four empty).`); }
+  const story = { title, text, areas, decoys }; if (filled.length) story.whole = whole;
+  return { errors: e, story };
 }
 
 const txt = (st, id) => { const m = st.text.match(new RegExp('\\[' + id + '\\|([^\\]]+)\\]')); return m ? m[1] : ''; };
@@ -103,7 +108,7 @@ const BADGES = [
   ['first-link', '🔗', 'First Link', 'Finish Make the Link on any story.'],
   ['triple-hook', '🎯', 'Triple Hook', 'Get 3 stars on a Spot the Hook story.'],
   ['perfect-link', '🧵', 'Perfect Link', 'Get 3 stars on a Make the Link story.'],
-  ['ideal-eye', '🌟', 'Ideal Eye', 'Tap the ideal hook first in 5 different stories.'],
+  ['ideal-eye', '🌟', 'Ideal Eye', 'Pick the ideal hook in 5 different stories.'],
   ['both-doors', '🚪', 'Both Doors', 'Play Spot the Hook and Make the Link on the same story.'],
   ['comeback', '💪', 'Comeback', 'Try a story again and win 3 stars.'],
   ['hook-master', '🏆', 'Hook Master', 'Get 3 stars on every Spot the Hook story.'],
@@ -120,6 +125,8 @@ export async function hl(m, path, b, DB, pid) {
   if (m === 'GET' && path.startsWith('/api/hl/story/')) {
     const st = find(path.split('/')[4]); if (!st) return J({ error: 'No such story' }, 404);
     const o = { id: st.id, title: st.title, text: pub(st) };
+    // One line per memory, shuffled so the order does not give away which hook opens which memory.
+    o.memories = shuf(st.areas.map(a => a.line || a.memory));
     if (path.endsWith('/link')) o.areas = st.areas.map(a => ({ area: a.area, hook: tk(st, a.hook), memory: a.memory }));
     return J(o);
   }
@@ -173,27 +180,27 @@ export async function hl(m, path, b, DB, pid) {
     return J({ stars, got, n, rank: by('rank'), kind: by('kind') });
   }
   if (m === 'POST' && path === '/api/hl/check-hook') {
+    // v0.7: the pupil picks ONE hook, the one that opens the best memory. 3 stars = ideal, 2 = good, 1 = workable, 0 = not a hook (try again).
     const st = find(b.story); if (!st) return J({ error: 'No such story' }, 404);
-    const taps = [...new Set(Array.isArray(b.taps) ? b.taps.slice(0, 3) : [])];
-    const res = taps.map((t, i) => {
-      const id = tid(st, t), a = st.areas.find(x => x.hook === id);
-      if (a) return { t, r: 'hook', rank: a.rank, mine: i + 1, why: a.wh, wr: a.wr };
-      if (st.areas.some(x => x.link === id)) return { t, r: 'link', why: 'This is a link, not a hook. A link comes later, where the memory ties back to the story.' };
-      return { t, r: 'no', why: st.decoys[id] || 'Nothing in the memories connects to this.' };
-    });
-    const found = res.filter(x => x.r === 'hook'), ideal = found.some(x => x.rank === 1), wrong = res.length - found.length;
-    const stars = found.length === 3 && !wrong && res[0].rank === 1 ? 3 : ideal && found.length >= 2 && wrong <= 1 ? 2 : 1;
-    for (const x of res) await log(DB, pid, 'hook', st.id, x.rank ? String(x.rank) : '-', x.t, x.r);
-    await log(DB, pid, 'hook', st.id, 'first', taps[0] || '', res[0] && res[0].rank ? String(res[0].rank) : 'x');
-    await save(DB, pid, 'hook', st.id, stars);
-    const areas = st.areas.map(a => ({ t: tk(st, a.hook), rank: a.rank, why: a.wh, wr: a.wr })).sort((a, b) => a.rank - b.rank);
-    return J({ res, areas, stars, fit: fit(st, (await shapeOf(DB, pid)).shape, 'hook', 'hook') });
+    const tap = String(Array.isArray(b.taps) ? b.taps[0] : b.tap || ''), id = /^t\d{1,3}$/.test(tap) ? tid(st, tap) : undefined;
+    if (!id) return J({ error: 'Tap one hook in the story first' }, 400);
+    const a = st.areas.find(x => x.hook === id), best = st.areas.find(x => x.rank === 1), rank = a ? a.rank : 0;
+    let r = 'no', why = st.decoys[id] || 'Nothing in the memories connects to this.';
+    if (a) { r = 'hook'; why = a.wh; }
+    else if (st.areas.some(x => x.link === id)) { r = 'link'; why = 'This is a link, not a hook. A link comes later, where the memory ties back to the story.'; }
+    const stars = rank ? 4 - rank : 0;
+    await log(DB, pid, 'hook', st.id, rank ? String(rank) : '-', tap, r);
+    await log(DB, pid, 'hook', st.id, 'first', tap, rank ? String(rank) : 'x');
+    if (stars) await save(DB, pid, 'hook', st.id, stars);
+    const areas = st.areas.map(x => ({ t: tk(st, x.hook), rank: x.rank, hook: txt(st, x.hook), line: x.line || x.memory, why: x.wh, wr: x.wr })).sort((p, q) => p.rank - q.rank);
+    const ideal = { t: tk(st, best.hook), hook: txt(st, best.hook), link: txt(st, best.link), line: best.line || best.memory, memory: best.memory, whole: st.whole || null };
+    return J({ r, rank, why, wr: a ? a.wr : '', line: a ? (a.line || a.memory) : '', tap, stars, areas, ideal, fit: fit(st, (await shapeOf(DB, pid)).shape, 'hook', 'hook') });
   }
   if (m === 'POST' && path === '/api/hl/check-link') {
     const st = find(b.story), a = st && st.areas.find(x => x.area === b.area); if (!a) return J({ error: 'No such area' }, 404);
     const id = tid(st, b.tap), kind = KINDS.includes(b.kind) ? b.kind : '';
     let r = 'no', why = st.decoys[id] || 'This detail does not connect to the memory.';
-    if (id === a.link) { r = kind === a.kind ? 'ok' : 'kind'; why = a.wl + (r === 'kind' ? ` It is a "same ${a.kind}" link.` : ''); }
+    if (id === a.link) { r = kind === a.kind ? 'ok' : 'kind'; why = a.wl + (r === 'kind' ? ` What is the same here is the ${a.kind}.` : ''); }
     await log(DB, pid, 'link', st.id, a.area, String(b.tap).slice(0, 4), r);
     return J({ r, why, rank: a.rank, wr: a.wr, ans: tk(st, a.link), kind: a.kind });
   }
@@ -245,7 +252,7 @@ export async function adminStories(m, path, b, DB, sa, su) {
 // ---- Teacher: results (v0.3). sc = {q,b}: WHERE fragment on alias p (pupils), already limited to the teacher's classes ----
 const HINTS = {
   none: ['Not started yet', 'Ask them to try one story in each game.'],
-  weak: ['Picks a weak hook first', 'Revisit why a personal object or a sense is a stronger hook than a place. Compare the Ideal and Workable hooks in one story.'],
+  weak: ['Often picks a weak hook', 'Revisit why a personal object or a sense is a stronger hook than a place. Compare the memories: which one would help the character most with the problem in the story?'],
   mix: ['Mixes up hooks and links', 'Teach the order: a hook comes first and opens the memory; a link comes later and ties it back to the story.'],
   decoy: ['Taps scene details that are not triggers', 'Ask: does this detail remind the character of something that really happened to them?'],
   rankcard: ['Often misses the ideal hook in the Mixed Round', 'Put an Ideal and a Workable hook from one story side by side. Ask why a personal object or sense, noticed at the moment of choice, beats a place.'],
