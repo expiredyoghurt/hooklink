@@ -1,4 +1,13 @@
 # Changelog
+## v0.7
+- Changed: **Spot the Hook** is now one pick. Pupils choose the single hook that opens the best memory (3 stars Ideal, 2 Good, 1 Workable; a link or decoy gives no stars). Before, they tapped three hooks.
+- New: a **one-line memory** for every hook (45 for the built-in stories) is shown in Spot the Hook, shuffled, so pupils know what each memory is (for example, "Aisha remembers being too scared to jump into the pool.") before choosing.
+- New: every built-in story now has a **model flashback story** for its Ideal area: the present story, the hook, the flashback, and a link back that shows how the memory changed the character. Pupils read it after Spot the Hook, with the hook and link words highlighted.
+- Changed: **Make the Link** now has two numbered steps. Step 1: tap the part of the story that ties back to the memory. Step 2: say what is the same in the memory and in that part. The four buttons say "Same object / action / feeling / words" with an icon and a one-line example. The tapped words are shown above the buttons. The Mixed Round link cards use the same buttons and question.
+- Changed: teacher story editor has a required one-line memory for each area and an optional four-part model story. Guide updated. Stories saved before v0.7 still work (they show their full memory in Spot the Hook until a line is added).
+- Changed: badge "Ideal Eye" is now "Pick the ideal hook in 5 different stories". Suggested next step "Picks a weak hook first" is now "Often picks a weak hook". Cheat card updated.
+- Fixed: the purple "memory hook" highlight was hard to read in dark mode.
+- No schema change. Old Spot the Hook results (three taps) stay as they are.
 ## v0.6
 - New: **Plan a Story** door on the pupil home screen. Notes and an inline SVG picture for the story mountain (5 parts) and the 8-point story arc (Stasis, Trigger, The Quest, The Surprise, Critical Choice, Climax, Reversal, Resolution). Pupils choose a shape and can change it any time; the choice is saved in D1. Read-aloud, easy-read font, bigger text and focus management work as elsewhere.
 - New: practice activity. Two short stories (Mei and the Red Hat, Sam's Sports Day) with events in a mixed-up order; the pupil chooses the part for each event and gets checked feedback. Checked on the server; no stars or badges yet.
