@@ -1,0 +1,229 @@
+{
+ "stories": [
+  {
+   "id": "k1",
+   "type": "classic",
+   "title": "The Fallen Tower",
+   "text": "Hana had built a tall tower of wooden blocks. Her little cousin Arun ran past and knocked it over with a crash. [hc|Her cheeks felt hot] and her fists were tight. In her hand was [ha|the small blue block with the chipped corner]. Arun whispered, [hb|\"Everyone drops things, right?\"] and his lip began to shake.\n===\nLast year, Hana had been building a model bridge for school in the crowded living room. Her friend Dev had picked up [da|the small blue block with the chipped corner] to help. It had slipped from his hand and the bridge had crashed down. [dc|Hana's cheeks had burned hot] and her fists had tightened. [x1|Dev's face had turned pale.] Grandma had come in and said softly, [db|\"Everyone drops things. Forgive the person, not the mess.\"] Hana had taken a slow breath and smiled at Dev. [x2|The bridge had been the best in the class] after they built it again, even stronger.\n===\nHana took a slow breath. [lb|\"Everyone drops things,\"] she said softly, and she smiled at Arun. [lc|The hot feeling in her cheeks faded away.] She put [la|the small blue block with the chipped corner] on the floor, and together they began the tower again.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 1,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "object",
+     "wh": "The blue block with the chipped corner is in Hana's hand now. It points to the flashback where Dev dropped the same block.",
+     "wr": "Ideal: a personal object the character is holding when the memory comes back.",
+     "wl": "The same blue block comes back. Hana now uses it to start again kindly, so she has learned to forgive."
+    },
+    {
+     "area": "b",
+     "rank": 2,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "words",
+     "wh": "\"Everyone drops things\" calls back the words Grandma said in the flashback.",
+     "wr": "Good: words can open a memory, but they are less personal than an object the character holds.",
+     "wl": "Hana says Grandma's words herself. She has learned to forgive the person, not the mess."
+    },
+    {
+     "area": "c",
+     "rank": 3,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "feeling",
+     "wh": "Hot cheeks match the way Hana felt when the bridge fell in the flashback.",
+     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
+     "wl": "The hot feeling fades. Hana has learned to calm down and forgive."
+    }
+   ],
+   "decoys": {
+    "x1": "This shows how Dev felt. The present story does not repeat it.",
+    "x2": "This is the result of forgiving. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k2",
+   "type": "classic",
+   "title": "Standing Beside Sara",
+   "text": "At recess, Wei Jie saw two boys laughing at Sara's old, patched school bag. Sara stared at the ground. He pushed [ha|his round glasses with the green strap] up his nose. In his head he could almost hear [hb|\"Leave him alone!\"] ringing like a bell. [hc|His heart began to thump loudly.]\n===\nLast year, Wei Jie had sat in the noisy canteen with a bowl of noodles. Two older boys had laughed at [da|his round glasses with the green strap]. [dc|His heart had thumped loudly] and he had wanted to hide. Then a girl named Mei had stood up from the next table. [db|\"Leave him alone!\"] she had said in a clear, strong voice. She had stood right beside him until the boys walked away. [x1|His noodles had gone cold,] but Wei Jie had not minded. [x2|The canteen clock had struck one.] He had never forgotten how brave Mei was.\n===\nWei Jie took a deep breath. [lb|\"Leave her alone!\"] he said in a clear, strong voice. [lc|His heart thumped loudly,] but he did not hide. He pushed [la|his round glasses with the green strap] up his nose and stood right beside Sara until the boys walked away.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "object",
+     "wh": "The green-strapped glasses are what the boys laughed at in the flashback.",
+     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
+     "wl": "Wei Jie wears the same glasses, but now he stands tall for Sara as Mei once did for him."
+    },
+    {
+     "area": "b",
+     "rank": 1,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "words",
+     "wh": "The words \"Leave him alone!\" are what Mei said to protect Wei Jie in the flashback.",
+     "wr": "Ideal: words stay in the mind and call back one clear moment.",
+     "wl": "Wei Jie says Mei's words for Sara. He has learned to stand up for others."
+    },
+    {
+     "area": "c",
+     "rank": 3,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "feeling",
+     "wh": "A thumping heart matches how Wei Jie felt in the canteen.",
+     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
+     "wl": "His heart still thumps, but he does not hide. He has learned to be brave anyway."
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This tells the time. It is not a detail the present story repeats."
+   }
+  },
+  {
+   "id": "k3",
+   "type": "classic",
+   "title": "The Thirsty Plant",
+   "text": "It was Danish's turn to look after the class plant, but he wanted to play football. The leaves had begun to droop. [ha|A trickle of water from the tap] dripped in the sink. [hb|His tummy felt heavy.] On the window sill sat [hc|a green watering can with a dented spout].\n===\nLast year, Danish had forgotten to water Grandma's tomato plant for a whole week. When he finally looked, the leaves had drooped like tired hands. [db|His tummy had felt heavy] with worry. He had grabbed [dc|the green watering can with the dented spout] and run to the tap. Grandma had said, \"Plants cannot ask. We must remember for them.\" [da|Danish had poured the water slowly,] a little at a time. [x1|The sun had been bright and hot.] By evening, the leaves had lifted again. [x2|Grandma had given him a tomato] to taste.\n===\nDanish put down his ball. [lb|His tummy felt heavy] when he thought of the thirsty leaves. He filled [lc|the green watering can with the dented spout] at the sink. Then he [la|poured the water slowly,] a little at a time. Soon the leaves began to lift.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "action",
+     "wh": "Water from the tap reminds Danish of pouring water slowly in the flashback.",
+     "wr": "Good: an action can repeat, but the same action fits many memories.",
+     "wl": "Danish pours slowly again, but this time he remembers the plant. He has learned to take care of living things."
+    },
+    {
+     "area": "b",
+     "rank": 3,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "feeling",
+     "wh": "A heavy tummy matches how Danish felt about the drooping plant.",
+     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
+     "wl": "The heavy feeling pushes him to act. He has learned to take responsibility."
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "object",
+     "wh": "The green watering can with the dented spout is the same can Danish used in the flashback.",
+     "wr": "Ideal: a personal object the character is holding when the memory comes back.",
+     "wl": "The same can comes back and Danish uses it at once. He has learned to look after living things."
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is the happy result. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k4",
+   "type": "classic",
+   "title": "Just One Tiny Bite",
+   "text": "At her friend Priya's party, Ling stared at a plate of strange orange fruit. [ha|Her tummy felt wobbly.] She could almost hear [hb|\"Just one tiny bite,\"] in her head. In her hand was [hc|a small silver spoon].\n===\nLast year, Ling's grandpa had put a bowl of bumpy green soup in front of her. [da|Her tummy had felt wobbly] and she had pushed the bowl away. Grandpa had given her [dc|a small silver spoon] and said gently, [db|\"Just one tiny bite.\"] Ling had closed her eyes and tasted. [x1|The soup had been warm and sweet.] She had opened her eyes and smiled. [x2|Grandpa's old radio had played soft music] in the kitchen. From then on, Ling had tried one tiny bite of everything.\n===\nLing took a deep breath. [lb|\"Just one tiny bite,\"] she whispered to herself. She scooped a little fruit onto [lc|the small silver spoon] and tasted it. [la|Her tummy stopped feeling wobbly.] It was sweet and juicy, and she asked for more.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 3,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "feeling",
+     "wh": "A wobbly tummy matches how Ling felt about the green soup.",
+     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
+     "wl": "The wobbly feeling stops. Ling has learned that trying new things can be fine."
+    },
+    {
+     "area": "b",
+     "rank": 1,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "words",
+     "wh": "\"Just one tiny bite\" are the words Grandpa said in the flashback.",
+     "wr": "Ideal: words stay in the mind and call back one clear moment.",
+     "wl": "Ling says Grandpa's words to herself. She has learned to try new things one small step at a time."
+    },
+    {
+     "area": "c",
+     "rank": 2,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "object",
+     "wh": "The small silver spoon is the one Grandpa gave Ling in the flashback.",
+     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
+     "wl": "Ling uses the spoon again, bravely. She has learned to try new things."
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k5",
+   "type": "classic",
+   "title": "The Paper Plane",
+   "text": "Zayd looked at the empty seat beside him. His best friend Jun had moved away last week. A new boy stood by the door, and Zayd could almost hear [ha|\"Want to sit with me?\"] echo in his head. In his school bag lay [hb|a paper plane with red wings]. [hc|His chest felt heavy and lonely.]\n===\nOn the first day of Primary 1, Zayd had sat alone at the back of the room. [dc|His chest had felt heavy and lonely.] A boy named Jun had walked over, holding [db|a paper plane with red wings]. [da|\"Want to sit with me?\"] he had asked with a big smile. Zayd's chest had felt lighter straight away. [x1|Jun had a gap in his front teeth.] They had flown the plane across the hall at recess. [x2|The bell had rung loudly.] From that day, they had been best friends.\n===\nZayd stood up and walked to the new boy. [la|\"Want to sit with me?\"] he asked with a big smile. He pulled out [lb|the paper plane with red wings] and showed it to him. [lc|His chest no longer felt heavy and lonely.]",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 1,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "words",
+     "wh": "\"Want to sit with me?\" are the words Jun said to Zayd in the flashback.",
+     "wr": "Ideal: words stay in the mind and call back one clear moment.",
+     "wl": "Zayd says Jun's words to the new boy. He has learned to be the friend someone needs."
+    },
+    {
+     "area": "b",
+     "rank": 2,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "object",
+     "wh": "The red-winged paper plane is the one Jun held when he met Zayd.",
+     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
+     "wl": "Zayd shares the plane just as Jun did. He has learned to welcome others."
+    },
+    {
+     "area": "c",
+     "rank": 3,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "feeling",
+     "wh": "A heavy, lonely chest matches how Zayd felt on his first day.",
+     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
+     "wl": "The lonely feeling goes away. Zayd has learned that friends can be made."
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail about Jun. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  }
+ ]
+}

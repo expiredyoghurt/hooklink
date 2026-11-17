@@ -1,4 +1,4 @@
-// Hook & Link v0.7 worker: pupil login, game API (hl.js), teacher dashboard API.
+// Hook & Link v0.6 worker: pupil login, game API (hl.js), teacher dashboard API.
 import { hl, results as hlResults, adminStories } from './hl.js';
 import PLAN from './plan.json';
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });
