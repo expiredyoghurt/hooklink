@@ -1,4 +1,4 @@
-// Hook & Link v0.6 worker: pupil login, game API (hl.js), teacher dashboard API.
+// Hook & Link v1.2 worker: pupil login, game API (hl.js), teacher dashboard API.
 import { hl, results as hlResults, adminStories } from './hl.js';
 import PLAN from './plan.json';
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });
@@ -23,6 +23,13 @@ const clear = (env, k) => env.DB.prepare('DELETE FROM fails WHERE k=?').bind(k).
 const hx = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
 async function pw(p, salt) { const k = await crypto.subtle.importKey('raw', new TextEncoder().encode(p), 'PBKDF2', false, ['deriveBits']); return hx(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: new TextEncoder().encode(salt), iterations: 100000 }, k, 256)); }
 const staff = async (req, env) => { const t = (req.headers.get('authorization') || '').replace('Bearer ', ''); return t ? env.DB.prepare("SELECT * FROM sessions WHERE token=? AND role IN ('admin','teacher') AND created>datetime('now','-4 hours')").bind(t).first() : null; };
+// Guests who have not played for 60 days (and were created more than 60 days ago) are removed.
+async function purgeGuests(DB) {
+  const old = "SELECT id FROM pupils WHERE username LIKE 'guest-%' AND created<datetime('now','-60 days') AND id NOT IN (SELECT pupil_id FROM hl_log WHERE ts>datetime('now','-60 days'))";
+  for (const t of ['hl_log', 'hl_stars', 'plan_pref']) await DB.prepare(`DELETE FROM ${t} WHERE pupil_id IN (${old})`).run();
+  await DB.prepare(`DELETE FROM sessions WHERE role='pupil' AND pupil_id IN (${old})`).run();
+  await DB.prepare("DELETE FROM pupils WHERE id IN (" + old + ")").run();
+}
 export default {
   async fetch(req, env) {
     const url = new URL(req.url), path = url.pathname, m = req.method, ip = req.headers.get('cf-connecting-ip') || 'x';
@@ -32,7 +39,7 @@ export default {
     try {
       if (m === 'POST' && path === '/api/register') {
         const u = cl(b.username, 20).toLowerCase(), pin = cl(b.pin, 8);
-        if (!/^[a-z0-9_.-]{3,20}$/.test(u)) return J({ error: 'Username: 3-20 letters or numbers' }, 400);
+        if (!/^[a-z0-9_.-]{3,20}$/.test(u) || u.startsWith('guest-')) return J({ error: 'Username: 3-20 letters or numbers' }, 400);
         if (!/^\d{4,8}$/.test(pin)) return J({ error: 'PIN must be 4-8 digits' }, 400);
         if (await DB.prepare('SELECT 1 FROM pupils WHERE username=?').bind(u).first()) return J({ error: 'That name is taken' }, 409);
         const r = await DB.prepare('INSERT INTO pupils(username,class,pin_hash) VALUES(?,?,?)').bind(u, cl(b.class, 20), await sha(u + ':' + pin)).run();
@@ -41,10 +48,26 @@ export default {
       if (m === 'POST' && path === '/api/login') {
         const u = cl(b.username, 20).toLowerCase();
         if (await blocked(env, 'u:' + u, 5) || await blocked(env, 'i:' + ip, 40)) return J({ error: 'Too many tries. Wait 10 minutes.' }, 429);
-        const p = await DB.prepare('SELECT * FROM pupils WHERE username=?').bind(u).first();
+        const p = u.startsWith('guest-') ? null : await DB.prepare('SELECT * FROM pupils WHERE username=?').bind(u).first();
         if (!p || !same(p.pin_hash, await sha(u + ':' + cl(b.pin, 8)))) { await fail(env, 'u:' + u); await fail(env, 'i:' + ip); return J({ error: 'Wrong name or PIN' }, 401); }
         await clear(env, 'u:' + u);
         return J({ token: await mk(env, 'pupil', p.id), username: u });
+      }
+      /* ---------- guests (v1.2): a guest is a pupil row named guest-xxxxxxxxxx whose "PIN" is a random key kept on the device ---------- */
+      if (m === 'POST' && path === '/api/guest') {
+        if (await blocked(env, 'g:' + ip, 30)) return J({ error: 'Too many guests from this place. Wait 10 minutes.' }, 429);
+        await fail(env, 'g:' + ip);
+        if (Math.random() < 0.05) await purgeGuests(DB);
+        const rnd = n => [...crypto.getRandomValues(new Uint8Array(n))].map(x => x.toString(16).padStart(2, '0')).join(''), u = 'guest-' + rnd(5), key = rnd(16);
+        const r = await DB.prepare('INSERT INTO pupils(username,class,pin_hash) VALUES(?,?,?)').bind(u, '', await sha(u + ':' + key)).run();
+        return J({ token: await mk(env, 'pupil', r.meta.last_row_id), guest: u, key });
+      }
+      if (m === 'POST' && path === '/api/guest/resume') {
+        const u = cl(b.guest, 20).toLowerCase();
+        if (!u.startsWith('guest-') || await blocked(env, 'u:' + u, 5) || await blocked(env, 'i:' + ip, 40)) return J({ error: 'Cannot resume' }, 401);
+        const p = await DB.prepare('SELECT * FROM pupils WHERE username=?').bind(u).first();
+        if (!p || !same(p.pin_hash, await sha(u + ':' + cl(b.key, 64)))) { await fail(env, 'u:' + u); await fail(env, 'i:' + ip); return J({ error: 'Cannot resume' }, 401); }
+        return J({ token: await mk(env, 'pupil', p.id) });
       }
       if (m === 'POST' && path === '/api/admin/login') {
         const un = cl(b.user, 30).toLowerCase();
@@ -63,6 +86,23 @@ export default {
       if (!path.startsWith('/api/admin/')) {
         const s = await auth(req, env, 'pupil');
         if (!s) return J({ error: 'Please log in' }, 401);
+        if (path === '/api/me' || path === '/api/me/claim' || path === '/api/me/class') {
+          const p = await DB.prepare('SELECT id,username,class FROM pupils WHERE id=?').bind(s.pupil_id).first();
+          if (!p) return J({ error: 'Please log in' }, 401);
+          const isG = p.username.startsWith('guest-');
+          if (m === 'GET' && path === '/api/me') return J({ username: isG ? 'Guest' : p.username, guest: isG, class: p.class || '' });
+          if (m === 'POST' && path === '/api/me/class') { await DB.prepare('UPDATE pupils SET class=? WHERE id=?').bind(cl(b.class, 20), p.id).run(); return J({ class: cl(b.class, 20) }); }
+          if (m === 'POST' && path === '/api/me/claim') {
+            if (!isG) return J({ error: 'You already have a username' }, 400);
+            const u = cl(b.username, 20).toLowerCase(), pin = cl(b.pin, 8);
+            if (!/^[a-z0-9_.-]{3,20}$/.test(u) || u.startsWith('guest-')) return J({ error: 'Username: 3-20 letters or numbers' }, 400);
+            if (!/^\d{4,8}$/.test(pin)) return J({ error: 'PIN must be 4-8 digits' }, 400);
+            if (await DB.prepare('SELECT 1 FROM pupils WHERE username=?').bind(u).first()) return J({ error: 'That name is taken' }, 409);
+            try { await DB.prepare("UPDATE pupils SET username=?,pin_hash=?,class=? WHERE id=? AND username LIKE 'guest-%'").bind(u, await sha(u + ':' + pin), cl(b.class, 20), p.id).run(); } catch (e) { return J({ error: 'That name is taken' }, 409); }
+            return J({ username: u, class: cl(b.class, 20) });
+          }
+          return J({ error: 'Not found' }, 404);
+        }
         return hl(m, path, b, DB, s.pupil_id);
       }
       /* ---------- teacher ---------- */
