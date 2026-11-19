@@ -1,4 +1,4 @@
-# Hook & Link v1.1
+# Hook & Link v1.3
 Tap-the-text game for P3/4. Fifteen full stories, each with three hook-and-link areas ranked 1 Ideal, 2 Good, 3 Workable. This version is Hook & Link only; the old Flashback Detectives code has been removed.
 
 - **Mixed Round** (v0.5): six cards from six different stories, alternating "pick the ideal hook" and "name the kind of link". Cards are checked one at a time on the server (`/api/hl/mix`, `mix-check`, `mix-finish`); only the first answer to a card counts. 3 stars = all right, 2 = two thirds or more, 1 = fewer. Best stars are kept as `hl_stars` mode `mix`, story `round`; cards are logged as mode `mix`.
@@ -16,6 +16,14 @@ Tap-the-text game for P3/4. Fifteen full stories, each with three hook-and-link 
 - Spot the Hook (classic): pick ONE hook, then tap the flashback detail it points to. Stars: ideal 3, good 2, workable 1, minus 1 for the wrong detail (minimum 1).
 - Make the Link (classic): pick ONE link, tap the flashback detail it repeats, then say what is the same. Same star rule; a wrong kind costs 1 star.
 - The Mixed Round, story editor and per-story "where it fits" card use the embedded stories only. Classic stories can be hidden but not edited yet. Progress, stars, badges and teacher results cover both.
+
+## Guests and accounts (v1.2)
+- **Play as guest** on the login screen. A guest is a pupil row named `guest-xxxxxxxxxx` with a random key kept on that device (`localStorage`), so the guest can come back after the 12-hour session ends (`/api/guest`, `/api/guest/resume`). No schema change.
+- **Save my progress** (banner on the home screen) turns the guest into a normal account with a username and PIN, and an optional class, keeping all stars, badges and logs (`/api/me/claim`). The old guest key stops working.
+- **Add my class** appears for pupils without a class (guest or registered) and can be used any time (`/api/me/class`). Class is free text, as at registration.
+- Names starting `guest-` cannot be registered or used to log in. Logging out as a guest asks for confirmation, because the progress cannot be recovered without the key. Guests who have not played for 60 days are removed (cleanup runs occasionally when a new guest is created). Guest creation is limited to 30 per place per 10 minutes.
+- Guests have no class, so teachers with assigned classes do not see them. The super admin sees them as `guest-...` until they are claimed and given a class.
+- A guest's progress lives only on that device until they save it. Clearing browser data loses the guest key.
 
 ## Pupils (`/`)
 - **Spot the Hook** (v0.7): pick ONE hook. Under the story, three clue cards show the first sentence of each hook's memory, so pupils can choose the hook that opens the best flashback. 3 stars = the ideal hook, 2 = the good one, 1 = anything else. Feedback shows all three as hook, flashback, back to now.

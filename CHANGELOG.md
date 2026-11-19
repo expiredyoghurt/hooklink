@@ -1,4 +1,12 @@
 # Changelog
+## v1.3
+- Changed: in Spot the Hook and Make the Link the story lists are now two columns, Classic Linked Flashback on the left and Embedded Linked Flashback on the right. On narrow screens (phones) the columns stack, Classic first.
+## v1.2
+- New: **Play as guest** on the login screen. Guests play with no name or PIN, and their progress is kept on the server.
+- New: **Save my progress**: a guest can later choose a username, a PIN and optionally a class. Stars, badges and logs carry over.
+- New: **Add my class** for any pupil without a class, at any time.
+- Guest sessions resume automatically with a key stored on the device. Logging out as a guest asks first.
+- Guest names (`guest-...`) are reserved. Inactive guests are removed after 60 days. Guest creation is rate limited.
 ## v1.1
 - Changed: the first five classic stories (The Fallen Tower, Standing Beside Sara, The Thirsty Plant, Just One Tiny Bite, The Paper Plane) now have the four stages: Trigger, Problem, Resolution, Lesson. Hooks point to the Trigger or Problem, and links repeat a detail from the Resolution or Lesson. The openings are unchanged. The flashbacks are rewritten and now run to about 105 to 135 words. The closings were adjusted so each link matches a late detail.
 - Changed: each of these stories now has its own hook ranks, link ranks and reasons, so the best answer varies (for example, a heavy tummy is the ideal hook in The Thirsty Plant).
