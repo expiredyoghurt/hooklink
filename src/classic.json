@@ -4,7 +4,7 @@
    "id": "k1",
    "type": "classic",
    "title": "The Fallen Tower",
-   "text": "Hana had built a tall tower of wooden blocks. Her little cousin Arun ran past and knocked it over with a crash. [hc|Her cheeks felt hot] and her fists were tight. In her hand was [ha|the small blue block with the chipped corner]. Arun whispered, [hb|\"Everyone drops things, right?\"] and his lip began to shake.\n===\nLast year, Hana had been building a model bridge for school in the crowded living room. Her friend Dev had picked up [da|the small blue block with the chipped corner] to help. It had slipped from his hand and the bridge had crashed down. [dc|Hana's cheeks had burned hot] and her fists had tightened. [x1|Dev's face had turned pale.] Grandma had come in and said softly, [db|\"Everyone drops things. Forgive the person, not the mess.\"] Hana had taken a slow breath and smiled at Dev. [x2|The bridge had been the best in the class] after they built it again, even stronger.\n===\nHana took a slow breath. [lb|\"Everyone drops things,\"] she said softly, and she smiled at Arun. [lc|The hot feeling in her cheeks faded away.] She put [la|the small blue block with the chipped corner] on the floor, and together they began the tower again.",
+   "text": "Hana had built a tall tower of wooden blocks. Her little cousin Arun ran past and knocked it over with a crash. [hc|Her cheeks felt hot] and her fists were tight. In her hand was [ha|the small blue block with the chipped corner]. Arun whispered, [hb|\"Everyone drops things, right?\"] and his lip began to shake.\n===\nLast year, Hana had been building a model bridge for school in the crowded living room. Her friend Dev had picked up [da|the small blue block with the chipped corner] to help.\n\nIt had slipped from his hand and the bridge had crashed down. [dc|Hana's cheeks had burned hot] and her fists had tightened. [x1|Dev's face had turned pale.] Grandma had come in and said softly, [db|\"Everyone drops things.\"]\n\nHana had taken a slow breath and smiled at Dev. He had put [ea|the small blue block with the chipped corner] back in its place, and they had built the bridge again. [x2|It had been the best bridge in the class.]\n\nHana had learned what Grandma meant. [eb|\"Forgive the person, not the mess,\"] Grandma had said. [ec|Her cheeks had cooled and her heart had felt light.]\n===\nHana took a slow breath. [lb|\"Forgive the person, not the mess,\"] she said softly, and she smiled at Arun. [lc|Her cheeks cooled and her heart felt light.] She put [la|the small blue block with the chipped corner] on the floor, and together they began the tower again.",
    "areas": [
     {
      "area": "a",
@@ -14,8 +14,11 @@
      "link": "la",
      "kind": "object",
      "wh": "The blue block with the chipped corner is in Hana's hand now. It points to the flashback where Dev dropped the same block.",
-     "wr": "Ideal: a personal object the character is holding when the memory comes back.",
-     "wl": "The same blue block comes back. Hana now uses it to start again kindly, so she has learned to forgive."
+     "wr": "Ideal: the blue block is in Hana's hand now, and it is what Dev dropped at the start of the Problem.",
+     "wl": "The same object from the Resolution comes back. This time it shows how Hana has grown.",
+     "lrank": 2,
+     "wlr": "Good: the same block returns and shows a fresh start, but it does not say what Hana learned.",
+     "ldetail": "ea"
     },
     {
      "area": "b",
@@ -25,8 +28,11 @@
      "link": "lb",
      "kind": "words",
      "wh": "\"Everyone drops things\" calls back the words Grandma said in the flashback.",
-     "wr": "Good: words can open a memory, but they are less personal than an object the character holds.",
-     "wl": "Hana says Grandma's words herself. She has learned to forgive the person, not the mess."
+     "wr": "Good: Arun's words echo Grandma's, but someone else says them, so the pull is weaker.",
+     "wl": "Hana says the lesson from the end of the flashback again. This shows what Hana has learned.",
+     "lrank": 1,
+     "wlr": "Ideal: Grandma's lesson in Hana's own voice shows she has learned to forgive.",
+     "ldetail": "eb"
     },
     {
      "area": "c",
@@ -36,20 +42,29 @@
      "link": "lc",
      "kind": "feeling",
      "wh": "Hot cheeks match the way Hana felt when the bridge fell in the flashback.",
-     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
-     "wl": "The hot feeling fades. Hana has learned to calm down and forgive."
+     "wr": "Workable: hot cheeks could belong to many angry moments.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Hana learned.",
+     "lrank": 3,
+     "wlr": "Workable: a light heart shows the change, but it is the weakest sign of learning.",
+     "ldetail": "ec"
     }
    ],
    "decoys": {
     "x1": "This shows how Dev felt. The present story does not repeat it.",
     "x2": "This is the result of forgiving. The present story does not repeat it."
-   }
+   },
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ]
   },
   {
    "id": "k2",
    "type": "classic",
    "title": "Standing Beside Sara",
-   "text": "At recess, Wei Jie saw two boys laughing at Sara's old, patched school bag. Sara stared at the ground. He pushed [ha|his round glasses with the green strap] up his nose. In his head he could almost hear [hb|\"Leave him alone!\"] ringing like a bell. [hc|His heart began to thump loudly.]\n===\nLast year, Wei Jie had sat in the noisy canteen with a bowl of noodles. Two older boys had laughed at [da|his round glasses with the green strap]. [dc|His heart had thumped loudly] and he had wanted to hide. Then a girl named Mei had stood up from the next table. [db|\"Leave him alone!\"] she had said in a clear, strong voice. She had stood right beside him until the boys walked away. [x1|His noodles had gone cold,] but Wei Jie had not minded. [x2|The canteen clock had struck one.] He had never forgotten how brave Mei was.\n===\nWei Jie took a deep breath. [lb|\"Leave her alone!\"] he said in a clear, strong voice. [lc|His heart thumped loudly,] but he did not hide. He pushed [la|his round glasses with the green strap] up his nose and stood right beside Sara until the boys walked away.",
+   "text": "At recess, Wei Jie saw two boys laughing at Sara's old, patched school bag. Sara stared at the ground. He pushed [ha|his round glasses with the green strap] up his nose. In his head he could almost hear [hb|\"Leave him alone!\"] ringing like a bell. [hc|His heart began to thump loudly.]\n===\nLast year, Wei Jie had sat in the noisy canteen with a bowl of noodles. Two older boys had laughed at [da|his round glasses with the green strap].\n\n[dc|His heart had thumped loudly] and he had wanted to hide. [x1|His noodles had gone cold.] Then a girl named Mei had stood up from the next table. [db|\"Leave him alone!\"] she had said in a clear, strong voice.\n\nShe had stood right beside him until the boys walked away. [x2|The canteen clock had struck one.] Wei Jie had pushed [ea|his round glasses with the green strap] up his nose and smiled at her.\n\nWei Jie had learned what brave looked like. [eb|\"Stand beside someone who needs you,\"] Mei had told him. [ec|His heart had felt steady and strong.]\n===\nWei Jie took a deep breath. [lb|\"Stand beside someone who needs you,\"] he told himself. [lc|His heart felt steady and strong.] He pushed [la|his round glasses with the green strap] up his nose, stepped forward and said, \"Leave her alone!\" Then he stood right beside Sara until the boys walked away.",
    "areas": [
     {
      "area": "a",
@@ -59,8 +74,11 @@
      "link": "la",
      "kind": "object",
      "wh": "The green-strapped glasses are what the boys laughed at in the flashback.",
-     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
-     "wl": "Wei Jie wears the same glasses, but now he stands tall for Sara as Mei once did for him."
+     "wr": "Good: the glasses are what the boys laughed at, but they do not show the moment Mei spoke.",
+     "wl": "The same object from the Resolution comes back. This time it shows how Wei Jie has grown.",
+     "lrank": 2,
+     "wlr": "Good: pushing his glasses up shows he is no longer hiding, but it does not say why.",
+     "ldetail": "ea"
     },
     {
      "area": "b",
@@ -70,8 +88,11 @@
      "link": "lb",
      "kind": "words",
      "wh": "The words \"Leave him alone!\" are what Mei said to protect Wei Jie in the flashback.",
-     "wr": "Ideal: words stay in the mind and call back one clear moment.",
-     "wl": "Wei Jie says Mei's words for Sara. He has learned to stand up for others."
+     "wr": "Ideal: the words Mei said are what saved Wei Jie, so they point straight at the heart of the Problem.",
+     "wl": "Wei Jie says the lesson from the end of the flashback again. This shows what Wei Jie has learned.",
+     "lrank": 3,
+     "wlr": "Workable: the rule in words is true, but saying it does not show he has changed.",
+     "ldetail": "eb"
     },
     {
      "area": "c",
@@ -81,65 +102,89 @@
      "link": "lc",
      "kind": "feeling",
      "wh": "A thumping heart matches how Wei Jie felt in the canteen.",
-     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
-     "wl": "His heart still thumps, but he does not hide. He has learned to be brave anyway."
+     "wr": "Workable: a thumping heart could come from many frightening moments.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Wei Jie learned.",
+     "lrank": 1,
+     "wlr": "Ideal: steady and strong is the clear opposite of a thumping heart, so it shows the change best.",
+     "ldetail": "ec"
     }
    ],
    "decoys": {
     "x1": "This is a detail of the scene. The present story does not repeat it.",
     "x2": "This tells the time. It is not a detail the present story repeats."
-   }
+   },
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ]
   },
   {
    "id": "k3",
    "type": "classic",
    "title": "The Thirsty Plant",
-   "text": "It was Danish's turn to look after the class plant, but he wanted to play football. The leaves had begun to droop. [ha|A trickle of water from the tap] dripped in the sink. [hb|His tummy felt heavy.] On the window sill sat [hc|a green watering can with a dented spout].\n===\nLast year, Danish had forgotten to water Grandma's tomato plant for a whole week. When he finally looked, the leaves had drooped like tired hands. [db|His tummy had felt heavy] with worry. He had grabbed [dc|the green watering can with the dented spout] and run to the tap. Grandma had said, \"Plants cannot ask. We must remember for them.\" [da|Danish had poured the water slowly,] a little at a time. [x1|The sun had been bright and hot.] By evening, the leaves had lifted again. [x2|Grandma had given him a tomato] to taste.\n===\nDanish put down his ball. [lb|His tummy felt heavy] when he thought of the thirsty leaves. He filled [lc|the green watering can with the dented spout] at the sink. Then he [la|poured the water slowly,] a little at a time. Soon the leaves began to lift.",
+   "text": "It was Danish's turn to look after the class plant, but he wanted to play football. The leaves had begun to droop. [ha|A trickle of water from the tap] dripped in the sink. [hb|His tummy felt heavy.] On the window sill sat [hc|a green watering can with a dented spout].\n===\nLast year, Danish had forgotten to water Grandma's tomato plant for a whole week. When he finally looked, the leaves had drooped like tired hands.\n\n[db|His tummy had felt heavy] with worry. He had grabbed [dc|the green watering can with the dented spout] and run to the tap. [da|A trickle of water from the tap] had been all he could get at first. [x1|The sun had been bright and hot.]\n\nGrandma had said, \"Plants cannot ask. We must remember for them.\" [ea|Danish had poured the water slowly,] a little at a time. [x2|Grandma had given him a tomato] to taste.\n\nBy evening, the leaves had lifted again. [eb|His tummy had felt light and glad.] The next morning he had filled [ec|the green watering can with the dented spout] again without being asked.\n===\nDanish put down his ball. The thirsty leaves had been on his mind all morning, but [lb|his tummy felt light and glad] now that he had a plan. He filled [lc|the green watering can with the dented spout] at the sink. Then he [la|poured the water slowly,] a little at a time. Soon the leaves began to lift.",
    "areas": [
     {
      "area": "a",
-     "rank": 2,
+     "rank": 3,
      "hook": "ha",
      "detail": "da",
      "link": "la",
      "kind": "action",
      "wh": "Water from the tap reminds Danish of pouring water slowly in the flashback.",
-     "wr": "Good: an action can repeat, but the same action fits many memories.",
-     "wl": "Danish pours slowly again, but this time he remembers the plant. He has learned to take care of living things."
+     "wr": "Workable: a trickle of water could be in any story about water.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Danish has grown.",
+     "lrank": 1,
+     "wlr": "Ideal: pouring slowly is the very habit that fixes the plant, so it shows the change best.",
+     "ldetail": "ea"
     },
     {
      "area": "b",
-     "rank": 3,
+     "rank": 1,
      "hook": "hb",
      "detail": "db",
      "link": "lb",
      "kind": "feeling",
      "wh": "A heavy tummy matches how Danish felt about the drooping plant.",
-     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
-     "wl": "The heavy feeling pushes him to act. He has learned to take responsibility."
+     "wr": "Ideal: a heavy tummy points straight at Danish's worry, the heart of the Problem.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Danish learned.",
+     "lrank": 3,
+     "wlr": "Workable: feeling light and glad shows the change, but it is the weakest sign of learning.",
+     "ldetail": "eb"
     },
     {
      "area": "c",
-     "rank": 1,
+     "rank": 2,
      "hook": "hc",
      "detail": "dc",
      "link": "lc",
      "kind": "object",
      "wh": "The green watering can with the dented spout is the same can Danish used in the flashback.",
-     "wr": "Ideal: a personal object the character is holding when the memory comes back.",
-     "wl": "The same can comes back and Danish uses it at once. He has learned to look after living things."
+     "wr": "Good: the watering can is in the Problem, but it is only what he used to fix it.",
+     "wl": "The same object from the Lesson comes back. This time it shows how Danish has grown.",
+     "lrank": 2,
+     "wlr": "Good: filling the can again shows he now remembers, but the action shows the care more clearly.",
+     "ldetail": "ec"
     }
    ],
    "decoys": {
     "x1": "This is a detail of the scene. The present story does not repeat it.",
     "x2": "This is the happy result. The present story does not repeat it."
-   }
+   },
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ]
   },
   {
    "id": "k4",
    "type": "classic",
    "title": "Just One Tiny Bite",
-   "text": "At her friend Priya's party, Ling stared at a plate of strange orange fruit. [ha|Her tummy felt wobbly.] She could almost hear [hb|\"Just one tiny bite,\"] in her head. In her hand was [hc|a small silver spoon].\n===\nLast year, Ling's grandpa had put a bowl of bumpy green soup in front of her. [da|Her tummy had felt wobbly] and she had pushed the bowl away. Grandpa had given her [dc|a small silver spoon] and said gently, [db|\"Just one tiny bite.\"] Ling had closed her eyes and tasted. [x1|The soup had been warm and sweet.] She had opened her eyes and smiled. [x2|Grandpa's old radio had played soft music] in the kitchen. From then on, Ling had tried one tiny bite of everything.\n===\nLing took a deep breath. [lb|\"Just one tiny bite,\"] she whispered to herself. She scooped a little fruit onto [lc|the small silver spoon] and tasted it. [la|Her tummy stopped feeling wobbly.] It was sweet and juicy, and she asked for more.",
+   "text": "At her friend Priya's party, Ling stared at a plate of strange orange fruit. [ha|Her tummy felt wobbly.] She could almost hear [hb|\"Just one tiny bite,\"] in her head. In her hand was [hc|a small silver spoon].\n===\nLast year, Ling's grandpa had put a bowl of bumpy green soup in front of her. [da|Her tummy had felt wobbly] and she had pushed the bowl away.\n\nGrandpa had given her [dc|a small silver spoon] and said gently, [db|\"Just one tiny bite.\"] [x1|The kitchen had smelled of ginger.]\n\nLing had closed her eyes and tasted. The soup had been warm and sweet. [x2|Grandpa's old radio had played soft music] in the kitchen. [ea|Her tummy had stopped feeling wobbly.]\n\nFrom then on, Ling had tried one tiny bite of everything. [eb|\"Just one tiny bite is a brave start,\"] she had told herself. She had kept [ec|the small silver spoon] in her bag for new foods.\n===\nLing took a deep breath. [lb|\"Just one tiny bite is a brave start,\"] she whispered to herself. She scooped a little fruit onto [lc|the small silver spoon] and tasted it. [la|Her tummy stopped feeling wobbly.] It was sweet and juicy, and she asked for more.",
    "areas": [
     {
      "area": "a",
@@ -149,8 +194,11 @@
      "link": "la",
      "kind": "feeling",
      "wh": "A wobbly tummy matches how Ling felt about the green soup.",
-     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
-     "wl": "The wobbly feeling stops. Ling has learned that trying new things can be fine."
+     "wr": "Workable: a wobbly tummy could be about any scary thing.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Ling learned.",
+     "lrank": 2,
+     "wlr": "Good: the wobbly feeling stops, which shows change, but it is only a feeling.",
+     "ldetail": "ea"
     },
     {
      "area": "b",
@@ -160,8 +208,11 @@
      "link": "lb",
      "kind": "words",
      "wh": "\"Just one tiny bite\" are the words Grandpa said in the flashback.",
-     "wr": "Ideal: words stay in the mind and call back one clear moment.",
-     "wl": "Ling says Grandpa's words to herself. She has learned to try new things one small step at a time."
+     "wr": "Ideal: Grandpa's words are what got Ling to try, so they point straight at the Problem.",
+     "wl": "Ling says the lesson from the end of the flashback again. This shows what Ling has learned.",
+     "lrank": 3,
+     "wlr": "Workable: the brave words are true, but saying them is not the same as trying.",
+     "ldetail": "eb"
     },
     {
      "area": "c",
@@ -171,8 +222,137 @@
      "link": "lc",
      "kind": "object",
      "wh": "The small silver spoon is the one Grandpa gave Ling in the flashback.",
-     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
-     "wl": "Ling uses the spoon again, bravely. She has learned to try new things."
+     "wr": "Good: the spoon is in the Problem, but it is only a tool, not the idea.",
+     "wl": "The same object from the Lesson comes back. This time it shows how Ling has grown.",
+     "lrank": 1,
+     "wlr": "Ideal: Ling now picks up the spoon herself, so the object shows the change in her actions.",
+     "ldetail": "ec"
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   },
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ]
+  },
+  {
+   "id": "k5",
+   "type": "classic",
+   "title": "The Paper Plane",
+   "text": "Zayd looked at the empty seat beside him. His best friend Jun had moved away last week. A new boy stood by the door, and Zayd could almost hear [ha|\"Want to sit with me?\"] echo in his head. In his school bag lay [hb|a paper plane with red wings]. [hc|His chest felt heavy and lonely.]\n===\nOn the first day of Primary 1, Zayd had sat alone at the back of the room. [dc|His chest had felt heavy and lonely.]\n\nA boy named Jun had walked over, holding [db|a paper plane with red wings]. [da|\"Want to sit with me?\"] he had asked with a big smile. [x1|Jun had a gap in his front teeth.]\n\nZayd had nodded. They had flown [eb|the paper plane with red wings] across the hall at recess. [x2|The bell had rung loudly.]\n\nFrom that day, they had been best friends. [ea|\"A friend is someone who sits with you,\"] Zayd had thought. [ec|His chest had felt light and warm.]\n===\nZayd stood up and walked to the new boy. [la|\"A friend is someone who sits with you,\"] he said with a big smile. \"Want to sit with me?\" He pulled out [lb|the paper plane with red wings] and showed it to him. [lc|His chest felt light and warm.]",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "kind": "words",
+     "wh": "\"Want to sit with me?\" are the words Jun said to Zayd in the flashback.",
+     "wr": "Good: the words are what Jun said, but they come after the Problem has already begun.",
+     "wl": "Zayd says the lesson from the end of the flashback again. This shows what Zayd has learned.",
+     "lrank": 1,
+     "wlr": "Ideal: the lesson in Zayd's own words shows he now acts as a friend.",
+     "ldetail": "ea"
+    },
+    {
+     "area": "b",
+     "rank": 3,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "kind": "object",
+     "wh": "The red-winged paper plane is the one Jun held when he met Zayd.",
+     "wr": "Workable: a paper plane could appear in any story about play.",
+     "wl": "The same object from the Resolution comes back. This time it shows how Zayd has grown.",
+     "lrank": 3,
+     "wlr": "Workable: sharing the plane repeats the Resolution but does not say what changed.",
+     "ldetail": "eb"
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "kind": "feeling",
+     "wh": "A heavy, lonely chest matches how Zayd felt on his first day.",
+     "wr": "Ideal: a heavy, lonely chest points straight at the Trigger, where Zayd's story begins.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Zayd learned.",
+     "lrank": 2,
+     "wlr": "Good: light and warm is the opposite of heavy and lonely, but the words say it more clearly.",
+     "ldetail": "ec"
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail about Jun. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   },
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ]
+  },
+  {
+   "id": "k6",
+   "type": "classic",
+   "title": "The Red Skipping Rope",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "At the school sports trial, Mina's turn to skip had come. Her legs wobbled. [ha|The red rope with wooden handles] felt heavy in her hands. All around her she could hear [hb|the slap, slap of ropes on the ground], and [hc|her stomach felt tight and fluttery].\n===\nLast year, Mina's cousin had given her [da|a red rope with wooden handles] for her birthday. Mina had wanted to skip like the big girls.\n\nBut the rope had tangled around her feet again and again. [db|The slap, slap of ropes on the ground] had followed every trip. [dc|Her stomach had felt tight and fluttery] with worry. [x1|The other girls had skipped nearby.]\n\nEvery afternoon, Mina had practised a little more. [eb|She had counted each jump out loud,] one, two, three. First three jumps, then ten, then twenty. [x2|The wooden handles had grown smooth.]\n\nMina had learned a secret. [ea|\"Little by little, I can do it,\"] she had told herself. [ec|Her stomach had felt calm and proud.]\n===\nMina took a deep breath. [lb|She counted each jump out loud,] one, two, three. [la|\"Little by little, I can do it,\"] she whispered. [lc|Her stomach felt calm and proud] as the rope sang round and round.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 1,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The red rope is the birthday gift that starts the flashback.",
+     "wr": "Ideal: the red rope is the gift that starts the whole story, and Mina is holding it right now.",
+     "wl": "Mina says the lesson from the end of the flashback again. This shows what Mina has learned.",
+     "wlr": "Good: the lesson in her own words says what she learned, but saying it is easier than showing it.",
+     "lrank": 2
+    },
+    {
+     "area": "b",
+     "rank": 2,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The slapping rope sound is what Mina heard when she kept tripping.",
+     "wr": "Good: the slapping sound is part of the Problem, but sounds are less personal than the rope.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Mina has grown.",
+     "wlr": "Ideal: counting every jump aloud is the habit that fixed the Problem, so it shows the change best.",
+     "lrank": 1
+    },
+    {
+     "area": "c",
+     "rank": 3,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "A tight, fluttery stomach is how Mina felt when the rope kept tangling.",
+     "wr": "Workable: a fluttery stomach could belong to many nervous moments.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Mina learned.",
+     "wlr": "Workable: calm and proud shows she has changed, but it does not say how.",
+     "lrank": 3
     }
    ],
    "decoys": {
@@ -181,10 +361,76 @@
    }
   },
   {
-   "id": "k5",
+   "id": "k7",
    "type": "classic",
-   "title": "The Paper Plane",
-   "text": "Zayd looked at the empty seat beside him. His best friend Jun had moved away last week. A new boy stood by the door, and Zayd could almost hear [ha|\"Want to sit with me?\"] echo in his head. In his school bag lay [hb|a paper plane with red wings]. [hc|His chest felt heavy and lonely.]\n===\nOn the first day of Primary 1, Zayd had sat alone at the back of the room. [dc|His chest had felt heavy and lonely.] A boy named Jun had walked over, holding [db|a paper plane with red wings]. [da|\"Want to sit with me?\"] he had asked with a big smile. Zayd's chest had felt lighter straight away. [x1|Jun had a gap in his front teeth.] They had flown the plane across the hall at recess. [x2|The bell had rung loudly.] From that day, they had been best friends.\n===\nZayd stood up and walked to the new boy. [la|\"Want to sit with me?\"] he asked with a big smile. He pulled out [lb|the paper plane with red wings] and showed it to him. [lc|His chest no longer felt heavy and lonely.]",
+   "title": "Lost at the Night Market",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "At the crowded mall, Raj turned around and could not see his mum. [hb|The smell of sizzling satay] drifted past. [hc|His heart pounded in his chest.] In his pocket was [ha|a yellow balloon on a string].\n===\nLast year, Raj had gone to the night market with Dad. Dad had bought him [da|a yellow balloon on a string]. [x1|The lights had flashed red and green.]\n\nRaj had let the balloon pull him through the crowd. [db|The smell of sizzling satay] had drifted past. When he looked up, Dad had gone. [dc|His heart had pounded in his chest.]\n\nA helper at the information stall had asked, \"Are you lost?\" [eb|Raj had walked up to her] and said his name. Dad had come running. [x2|She had worn a green apron.]\n\nRaj had learned a safe rule. [ea|\"If I am lost, I stay and ask a helper,\"] he had told himself. [ec|His heart had slowed and he had felt safe.]\n===\nRaj stopped walking. [la|\"If I am lost, I stay and ask a helper,\"] he told himself. [lb|He walked up to a woman at the information desk] and said his name. [lc|His heart slowed and he felt safe] when Mum hurried over.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The yellow balloon is the gift that pulls Raj into the crowd at the start of the flashback.",
+     "wr": "Good: the balloon starts the flashback, but a balloon could appear in many stories.",
+     "wl": "Raj says the lesson from the end of the flashback again. This shows what Raj has learned.",
+     "wlr": "Ideal: the safe rule in Raj's own words shows what he learned.",
+     "lrank": 1
+    },
+    {
+     "area": "b",
+     "rank": 3,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The smell of satay is what Raj noticed just before he found he was lost.",
+     "wr": "Workable: the smell comes in the Problem, but it could belong to any market scene.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Raj has grown.",
+     "wlr": "Good: walking up to a helper repeats the Resolution, but it does not say why.",
+     "lrank": 2
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "A pounding heart is how Raj felt when he saw Dad was gone.",
+     "wr": "Ideal: a pounding heart in a crowd points straight at the moment Raj knew he was lost.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Raj learned.",
+     "wlr": "Workable: feeling safe shows the change, but it is the weakest sign of learning.",
+     "lrank": 3
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k8",
+   "type": "classic",
+   "title": "Snakes and Ladders",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "Aiden and his cousin were nearly at the end of Snakes and Ladders. Aiden was behind. [hb|The rattle of the dice in the cup] filled the room. [ha|The blue dice with the chipped dot] sat in his palm. [hc|His cheeks burned hot.]\n===\nLast year, Aiden had been losing to his friend Kai. He had held [da|the blue dice with the chipped dot] and wanted to win badly.\n\n[db|The rattle of the dice in the cup] had stopped, and Aiden had secretly turned the dice to a six. [dc|His cheeks had burned hot.] Kai had seen it and put down his counter. [x1|The game had stopped at the last row.]\n\nAiden had said, \"Sorry, I cheated.\" [eb|He had moved his counter back] to where it had been. Kai had smiled and they had played on. [x2|The rain had tapped on the window.]\n\nAiden had learned something. [ea|\"A fair win feels better than a fake one,\"] he had thought. [ec|He had felt light and honest inside.]\n===\nAiden shook the dice and let it fall wherever it landed. [lb|He moved his counter back] when he saw he had gone one step too far. [la|\"A fair win feels better than a fake one,\"] he thought. [lc|He felt light and honest inside,] even when he lost.",
    "areas": [
     {
      "area": "a",
@@ -192,21 +438,147 @@
      "hook": "ha",
      "detail": "da",
      "link": "la",
+     "ldetail": "ea",
      "kind": "words",
-     "wh": "\"Want to sit with me?\" are the words Jun said to Zayd in the flashback.",
-     "wr": "Ideal: words stay in the mind and call back one clear moment.",
-     "wl": "Zayd says Jun's words to the new boy. He has learned to be the friend someone needs."
+     "wh": "The chipped dice is in Aiden's hand when he decides to cheat in the flashback.",
+     "wr": "Ideal: the chipped dice is in his hand at the moment he decides to cheat.",
+     "wl": "Aiden says the lesson from the end of the flashback again. This shows what Aiden has learned.",
+     "wlr": "Workable: anyone can say the lesson, but saying it does not prove Aiden changed.",
+     "lrank": 3
     },
     {
      "area": "b",
-     "rank": 2,
+     "rank": 3,
      "hook": "hb",
      "detail": "db",
      "link": "lb",
-     "kind": "object",
-     "wh": "The red-winged paper plane is the one Jun held when he met Zayd.",
-     "wr": "Good: an object from the flashback, but it is not tied to the lesson as strongly.",
-     "wl": "Zayd shares the plane just as Jun did. He has learned to welcome others."
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The rattling dice is the sound just before Aiden cheated.",
+     "wr": "Workable: the rattle is only a sound, and many games make it.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Aiden has grown.",
+     "wlr": "Ideal: moving the counter back is the honest act itself, so it shows the change best.",
+     "lrank": 1
+    },
+    {
+     "area": "c",
+     "rank": 2,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "Burning cheeks show how Aiden felt when he cheated and was seen.",
+     "wr": "Good: burning cheeks show the moment he was caught, but feelings fit many memories.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Aiden learned.",
+     "wlr": "Good: feeling light and honest shows the change, but the action shows it more clearly.",
+     "lrank": 2
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k9",
+   "type": "classic",
+   "title": "The Beach Clean-up",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "On the school trip to the beach, Shu Ling saw crisp packets and bottles lying in the sand. [hc|Her tummy felt sad and heavy.] [hb|The salty smell of the sea] blew past her. In her bag was [ha|a small green bucket with a crack].\n===\nLast year, Shu Ling had found [da|a small green bucket with a crack] on the beach with her dad. Someone had left it behind. [x1|A seagull had cried overhead.]\n\n[db|The salty smell of the sea] had turned sour near a heap of rubbish. Plastic bags had tangled in the seaweed and a little crab had been stuck in a bottle. [dc|Her tummy had felt sad and heavy.]\n\nShu Ling and her dad had filled the bucket again and again. [eb|They had picked up every piece, one by one,] until the sand looked clean. The crab had scuttled free. [x2|The sun had set orange and pink.]\n\nShu Ling had learned a lesson. [ea|\"Small hands can make a big difference,\"] she had told her dad. [ec|Her tummy had felt light and happy.]\n===\nShu Ling took out the green bucket. [lb|She picked up every piece, one by one,] from the sand. [la|\"Small hands can make a big difference,\"] she told her friends. [lc|Her tummy felt light and happy] as the beach grew clean.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 3,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The cracked green bucket is what Shu Ling finds at the start of the flashback.",
+     "wr": "Workable: the bucket starts the story, but it does not point to the problem of the rubbish.",
+     "wl": "Shu Ling says the lesson from the end of the flashback again. This shows what Shu Ling has learned.",
+     "wlr": "Good: the lesson in her own words, but it is something she says rather than does.",
+     "lrank": 2
+    },
+    {
+     "area": "b",
+     "rank": 1,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The sour smell of the sea is how she first noticed the rubbish.",
+     "wr": "Ideal: the sour smell is how she first noticed the rubbish, the heart of the Problem.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Shu Ling has grown.",
+     "wlr": "Workable: picking up rubbish repeats the Resolution but does not show what changed.",
+     "lrank": 3
+    },
+    {
+     "area": "c",
+     "rank": 2,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "A sad, heavy tummy is how she felt when she saw the trapped crab.",
+     "wr": "Good: a sad, heavy tummy fits the Problem, but it could be about many things.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Shu Ling learned.",
+     "wlr": "Ideal: light and happy is the clear opposite of sad and heavy, so it shows the change best.",
+     "lrank": 1
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k10",
+   "type": "classic",
+   "title": "The Blue Toy Box",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "At school, a box for the toy drive stood by the door. Hafiz carried [ha|a blue toy box with a faded star on the lid], but [hc|his hands gripped tight]. [hb|The little whirr of a toy motor] hummed inside it.\n===\nLast year, Hafiz had been asked to give a toy to a charity drive. He had opened [da|a blue toy box with a faded star on the lid]. [x1|The box beside it had been full of old books.]\n\nHis favourite robot had been inside. [db|The little whirr of a toy motor] had hummed when he pressed the button, and [dc|his hands had gripped tight.] He had not wanted to let it go.\n\nThen he had seen a small boy at the drive with empty hands. [eb|Hafiz had held out the robot with both hands.] The boy's eyes had lit up. [x2|The boy had worn a tiny blue cap.]\n\nHafiz had learned something. [ea|\"Giving feels better than keeping,\"] he had told his mum. [ec|His chest had felt warm and bright.]\n===\nHafiz took a deep breath and lifted the lid. [lb|He held out a toy with both hands] to the girl at the drive. [la|\"Giving feels better than keeping,\"] he said quietly. [lc|His chest felt warm and bright.]",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The blue toy box is what Hafiz opens at the start of the flashback.",
+     "wr": "Good: the toy box starts the flashback, but it does not show the struggle.",
+     "wl": "Hafiz says the lesson from the end of the flashback again. This shows what Hafiz has learned.",
+     "wlr": "Workable: the lesson words are true, but saying them does not show a changed Hafiz.",
+     "lrank": 3
+    },
+    {
+     "area": "b",
+     "rank": 1,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The whirr of the robot is the sound he hears while he decides.",
+     "wr": "Ideal: the robot's whirr is the sound of what Hafiz does not want to give up.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Hafiz has grown.",
+     "wlr": "Good: holding out a toy repeats the Resolution, but it needs the feeling to show why.",
+     "lrank": 2
     },
     {
      "area": "c",
@@ -214,14 +586,317 @@
      "hook": "hc",
      "detail": "dc",
      "link": "lc",
+     "ldetail": "ec",
      "kind": "feeling",
-     "wh": "A heavy, lonely chest matches how Zayd felt on his first day.",
-     "wr": "Workable: a feeling fits many memories, so it does not point to one clear scene.",
-     "wl": "The lonely feeling goes away. Zayd has learned that friends can be made."
+     "wh": "Gripping hands show how Hafiz felt about letting his robot go.",
+     "wr": "Workable: gripping hands show the feeling, but many memories have tight hands.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Hafiz learned.",
+     "wlr": "Ideal: warm and bright is the clear opposite of gripping tight, so it shows the change best.",
+     "lrank": 1
     }
    ],
    "decoys": {
-    "x1": "This is a detail about Jun. The present story does not repeat it.",
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k11",
+   "type": "classic",
+   "title": "The Birthday Cake",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "At the family dinner, a big chocolate cake sat on the table. Everyone was waiting for Grandpa. [hc|Priya's fingers itched to dig in.] [hb|The sweet smell of vanilla icing] floated by, and her eyes fixed on [ha|a pink candle with a gold tip].\n===\nLast year, Priya had been given the job of lighting the cake at Grandpa's birthday. She had held [da|a pink candle with a gold tip] in her hand. [x1|The room had been full of balloons.]\n\n[db|The sweet smell of vanilla icing] had been too much. She had swiped a finger through the icing before anyone had sung. [dc|Priya's fingers had itched to dig in] again, but Mum had frowned.\n\nPriya had stopped and waited. [eb|She had folded her hands in her lap] and sung loudly with everyone else. [x2|Grandpa had blown out the candles.]\n\nPriya had learned something. [ea|\"Good things are worth waiting for,\"] she had told herself. [ec|She had felt proud of her calm hands.]\n===\nPriya sat down. [lb|She folded her hands in her lap] and waited. [la|\"Good things are worth waiting for,\"] she told herself. [lc|She felt proud of her calm hands] when Grandpa finally cut the cake.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 3,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The pink candle is what Priya is holding when the flashback starts.",
+     "wr": "Workable: the candle is in the Trigger, but it does not point to the temptation.",
+     "wl": "Priya says the lesson from the end of the flashback again. This shows what Priya has learned.",
+     "wlr": "Ideal: the lesson in Priya's own words says what she learned.",
+     "lrank": 1
+    },
+    {
+     "area": "b",
+     "rank": 2,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The icing smell is what tempted her just before she broke the rule.",
+     "wr": "Good: the smell is the temptation, but anyone at the table could smell it.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Priya has grown.",
+     "wlr": "Good: folding her hands repeats the Resolution, but it needs the words to show why.",
+     "lrank": 2
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "Itchy fingers show how much Priya wanted the cake.",
+     "wr": "Ideal: itchy fingers show exactly the temptation that caused the Problem.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Priya learned.",
+     "wlr": "Workable: pride shows the change, but it is the weakest sign of learning.",
+     "lrank": 3
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k12",
+   "type": "classic",
+   "title": "The Treasure Hunt",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "Mrs Tan was giving instructions for the class puzzle. [hb|The crackle of the instruction sheet] filled the room. Ethan's mind wandered. [ha|The red pencil with a chewed end] spun in his fingers. [hc|His mind raced and wandered.]\n===\nLast year, Ethan's class had gone on a treasure hunt. He had twirled [da|a red pencil with a chewed end] while the teacher gave the clues.\n\n[db|The crackle of the instruction sheet] had filled the field. [dc|His mind had raced and wandered.] He had missed the second clue and walked to the wrong end of the field. [x1|The grass had been wet and long.]\n\nHis friend Dina had waved him back. [eb|He had stopped, looked at Dina and listened to every word] this time. They had found the box together. [x2|The box had been painted gold.]\n\nEthan had learned something. [ea|\"Listening first saves time later,\"] he had told himself. [ec|He had felt calm and focused.]\n===\nEthan put down his pencil. [lb|He stopped, looked at Mrs Tan and listened to every word.] [la|\"Listening first saves time later,\"] he thought. [lc|He felt calm and focused,] and he understood every step.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The chewed pencil is what Ethan is spinning when he stops listening.",
+     "wr": "Good: the pencil starts the flashback, but it is an ordinary object.",
+     "wl": "Ethan says the lesson from the end of the flashback again. This shows what Ethan has learned.",
+     "wlr": "Good: the lesson in his own words, but it is easier to say than to do.",
+     "lrank": 2
+    },
+    {
+     "area": "b",
+     "rank": 1,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The crackling sheet is the sound that covered the clues.",
+     "wr": "Ideal: the crackle is what covered the clues, so it points straight at the Problem.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Ethan has grown.",
+     "wlr": "Ideal: stopping, looking and listening is the exact action that fixed the Problem.",
+     "lrank": 1
+    },
+    {
+     "area": "c",
+     "rank": 3,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "A racing, wandering mind is why Ethan missed the second clue.",
+     "wr": "Workable: a wandering mind fits many memories.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Ethan learned.",
+     "wlr": "Workable: feeling calm shows the change but does not say how.",
+     "lrank": 3
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k13",
+   "type": "classic",
+   "title": "Grandpa's Phone",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "Grandpa pressed the wrong button on his phone again. Nina sighed. [hb|A beep, beep, beep] came from the phone. [hc|Her patience felt thin.] By the door leaned [ha|a bicycle with a bright green bell].\n===\nLast year, Grandpa had begun teaching Nina to ride [da|a bicycle with a bright green bell]. [x1|He had worn his old straw hat.]\n\nNina had wobbled and fallen, again and again. [db|A beep, beep, beep] had come from the bell each time she squeezed it in fright. [dc|Her patience had felt thin,] and she had wanted to quit.\n\nGrandpa had not hurried her. [eb|He had held the back of the seat and walked beside her, step by step.] Soon Nina had pedalled alone. [x2|The path had been lined with frangipani trees.]\n\nNina had learned something. [ea|\"Patience is a way of showing love,\"] she had thought. [ec|She had felt warm and thankful.]\n===\nNina sat down next to Grandpa. [lb|She held his phone steady and showed him, step by step.] [la|\"Patience is a way of showing love,\"] she thought. [lc|She felt warm and thankful] as he smiled at the screen.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 1,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The bicycle with the green bell is what Grandpa teaches Nina to ride at the start.",
+     "wr": "Ideal: the bicycle with the green bell is where Grandpa's patience first shows.",
+     "wl": "Nina says the lesson from the end of the flashback again. This shows what Nina has learned.",
+     "wlr": "Ideal: the lesson in Nina's own words says what she learned.",
+     "lrank": 1
+    },
+    {
+     "area": "b",
+     "rank": 3,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The beeping bell is the sound Nina made each time she was afraid.",
+     "wr": "Workable: a beep could come from any phone or bell.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Nina has grown.",
+     "wlr": "Workable: helping step by step repeats the Resolution but does not say why.",
+     "lrank": 3
+    },
+    {
+     "area": "c",
+     "rank": 2,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "Thin patience is how Nina felt when she kept falling.",
+     "wr": "Good: thin patience points to the Problem, but many memories share that feeling.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Nina learned.",
+     "wlr": "Good: warm and thankful shows the change, but the words say it more clearly.",
+     "lrank": 2
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k14",
+   "type": "classic",
+   "title": "The Night Sky Puzzle",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "Lucas stared at the puzzle on the table and wanted to quit. In his hand was [ha|a puzzle piece shaped like a star]. [hc|His shoulders sagged.] Nearby, [hb|the click of pieces fitting together] came from Mum's table.\n===\nLast year, Lucas had begun a hard puzzle of the night sky. He had found [da|a puzzle piece shaped like a star] first.\n\nThe puzzle had so many dark pieces. [db|The click of pieces fitting together] had come only now and then. [dc|His shoulders had sagged,] and he had wanted to quit. [x1|The clock had ticked slowly.]\n\nBut Lucas had tried one piece at a time. [eb|He had sorted the dark pieces into little piles,] and soon they had clicked into place. [x2|Mum had brought him some milk.]\n\nLucas had learned something. [ea|\"One piece at a time is enough,\"] he had told himself. [ec|He had felt tall and proud.]\n===\nLucas sat up. [lb|He sorted the pieces into little piles.] [la|\"One piece at a time is enough,\"] he told himself. [lc|He felt tall and proud] when the first piece clicked into place.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 3,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The star-shaped piece is the first piece Lucas finds at the start of the flashback.",
+     "wr": "Workable: the star piece begins the puzzle but does not show the wish to quit.",
+     "wl": "Lucas says the lesson from the end of the flashback again. This shows what Lucas has learned.",
+     "wlr": "Good: the lesson in his own words, but saying it is not showing it.",
+     "lrank": 2
+    },
+    {
+     "area": "b",
+     "rank": 2,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The click of pieces is the sound he hears rarely when the puzzle is hard.",
+     "wr": "Good: the click is part of the Problem, but it only tells us about the puzzle.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Lucas has grown.",
+     "wlr": "Workable: sorting into piles repeats the Resolution but not what changed.",
+     "lrank": 3
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "Sagging shoulders show how Lucas felt about the dark pieces.",
+     "wr": "Ideal: sagging shoulders show the wish to quit, which is the Problem itself.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Lucas learned.",
+     "wlr": "Ideal: tall and proud is the clear opposite of sagging shoulders, so it shows the change best.",
+     "lrank": 1
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
+    "x2": "This is a background detail. The present story does not repeat it."
+   }
+  },
+  {
+   "id": "k15",
+   "type": "classic",
+   "title": "The Duck Rattle",
+   "stages": [
+    "Trigger",
+    "Problem",
+    "Resolution",
+    "Lesson"
+   ],
+   "text": "Baby Leo was crying and Mum was busy. Sofia stood by the cot. [hb|A soft, gurgling cry] came from the cot. In her hand was [ha|a yellow rattle shaped like a duck]. [hc|Her chest felt squeezed and cross.]\n===\nLast year, when baby Leo had first come home, Sofia had been given [da|a yellow rattle shaped like a duck] to hold for him.\n\nEveryone had cuddled Leo and nobody had cuddled Sofia. [db|A soft, gurgling cry] had filled the house. [dc|Her chest had felt squeezed and cross,] and she had dropped the rattle on the floor. [x1|The curtains had been drawn.]\n\nDad had knelt beside her and said, \"There is plenty of love for you too.\" [eb|Sofia had picked up the rattle and shaken it gently] in front of Leo. He had given his first big smile. [x2|Dad had made a cup of tea.]\n\nSofia had learned something. [ea|\"Love grows when we share it,\"] she had thought. [ec|Her chest had felt soft and warm.]\n===\nSofia took a deep breath. [lb|She picked up the rattle and shook it gently] in front of Leo. [la|\"Love grows when we share it,\"] she whispered. [lc|Her chest felt soft and warm] as he gave a big gummy smile.",
+   "areas": [
+    {
+     "area": "a",
+     "rank": 2,
+     "hook": "ha",
+     "detail": "da",
+     "link": "la",
+     "ldetail": "ea",
+     "kind": "words",
+     "wh": "The duck rattle is what Sofia is given to hold at the start of the flashback.",
+     "wr": "Good: the duck rattle begins the flashback, but it does not show Sofia's feelings.",
+     "wl": "Sofia says the lesson from the end of the flashback again. This shows what Sofia has learned.",
+     "wlr": "Workable: the lesson words are true, but anyone can say them.",
+     "lrank": 3
+    },
+    {
+     "area": "b",
+     "rank": 3,
+     "hook": "hb",
+     "detail": "db",
+     "link": "lb",
+     "ldetail": "eb",
+     "kind": "action",
+     "wh": "The gurgling cry is the sound that filled the house.",
+     "wr": "Workable: a crying baby is in the Problem, but it points to Leo, not Sofia.",
+     "wl": "The same action from the Resolution comes back. This time it shows how Sofia has grown.",
+     "wlr": "Ideal: shaking the rattle gently is the exact act that fixed the Problem, so it shows the change best.",
+     "lrank": 1
+    },
+    {
+     "area": "c",
+     "rank": 1,
+     "hook": "hc",
+     "detail": "dc",
+     "link": "lc",
+     "ldetail": "ec",
+     "kind": "feeling",
+     "wh": "A squeezed, cross chest is how Sofia felt when she was left out.",
+     "wr": "Ideal: a squeezed, cross chest is the jealousy that caused the Problem.",
+     "wl": "The feeling has changed since the Problem. It now matches the lesson Sofia learned.",
+     "wlr": "Good: soft and warm shows the change, but the action shows it more clearly.",
+     "lrank": 2
+    }
+   ],
+   "decoys": {
+    "x1": "This is a detail of the scene. The present story does not repeat it.",
     "x2": "This is a background detail. The present story does not repeat it."
    }
   }

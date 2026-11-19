@@ -1,0 +1,148 @@
+{
+ "items": [
+  {
+   "id": "e1",
+   "type": "entry",
+   "q": "Mina is holding her red rope. The flashback should start. Which words take the reader back?",
+   "opts": [
+    "Last year, Mina had been given a red rope.",
+    "Tomorrow, Mina will be given a red rope.",
+    "Mina is given a red rope right now."
+   ],
+   "a": 0,
+   "why": "Last year tells the reader we are looking back, and had been given shows it happened before the main story."
+  },
+  {
+   "id": "e2",
+   "type": "entry",
+   "q": "Raj smells satay and remembers something. Which sentence slides into the flashback?",
+   "opts": [
+    "The smell reminded him of the night market. Last year, Dad had bought him a balloon there.",
+    "The smell reminded him of the night market. Next week, Dad will buy him a balloon there.",
+    "The smell reminded him of the night market. Dad buys him a balloon."
+   ],
+   "a": 0,
+   "why": "First a memory clue, then a time word like Last year, then had + verb."
+  },
+  {
+   "id": "e3",
+   "type": "entry",
+   "q": "Which words can start a flashback?",
+   "opts": [
+    "Long ago,",
+    "Right now,",
+    "In a moment,"
+   ],
+   "a": 0,
+   "why": "Long ago, Last year and One summer all point to the past. Right now and In a moment do not."
+  },
+  {
+   "id": "e4",
+   "type": "entry",
+   "q": "Which sentence makes the reader want to go back into the flashback?",
+   "opts": [
+    "Hana looked at the block and remembered the day it chipped.",
+    "Hana looked at the block.",
+    "Hana likes blocks."
+   ],
+   "a": 0,
+   "why": "A memory clue makes the reader wonder what happened, so they follow Hana back."
+  },
+  {
+   "id": "t1",
+   "type": "tense",
+   "q": "Last year, Ethan ___ a red pencil while the teacher gave the clues.",
+   "opts": [
+    "had twirled",
+    "twirls",
+    "will twirl"
+   ],
+   "a": 0,
+   "why": "Start a flashback in the past perfect: had + the verb. It shows this happened before the main story."
+  },
+  {
+   "id": "t2",
+   "type": "tense",
+   "q": "Dad ___ a balloon for Raj before the crowd came.",
+   "opts": [
+    "had bought",
+    "buys",
+    "has buying"
+   ],
+   "a": 0,
+   "why": "Had + bought is the past perfect. It fits the start of a flashback."
+  },
+  {
+   "id": "t3",
+   "type": "tense",
+   "q": "The flashback is already moving. Then Mina ___ down the road after the rope.",
+   "opts": [
+    "chased",
+    "chases",
+    "will chase"
+   ],
+   "a": 0,
+   "why": "Once the flashback has started you can use the simple past: chased."
+  },
+  {
+   "id": "t4",
+   "type": "tense",
+   "q": "Which sentence has the wrong verb form?",
+   "opts": [
+    "Dad had gave her a rope.",
+    "Dad had given her a rope.",
+    "Dad gave her a rope."
+   ],
+   "a": 0,
+   "why": "Had gave is wrong. After had we use the past participle: had given."
+  },
+  {
+   "id": "x1",
+   "type": "exit",
+   "q": "The flashback ends and the main story begins again. Which sentence brings the reader back?",
+   "opts": [
+    "Back in the story, Mina took a deep breath.",
+    "Last year, Mina took a deep breath.",
+    "Long ago, Mina took a deep breath."
+   ],
+   "a": 0,
+   "why": "Back in the story tells the reader we have left the flashback."
+  },
+  {
+   "id": "x2",
+   "type": "exit",
+   "q": "Which sentence shows the character has changed after the flashback?",
+   "opts": [
+    "Now Mina counted her jumps out loud, calm and steady.",
+    "Mina had counted her jumps last year.",
+    "Mina will count her jumps tomorrow."
+   ],
+   "a": 0,
+   "why": "Now brings us back to the main story, and her calm counting shows what she learned."
+  },
+  {
+   "id": "x3",
+   "type": "exit",
+   "q": "Which word helps the reader leave the flashback?",
+   "opts": [
+    "Now,",
+    "Long ago,",
+    "Last year,"
+   ],
+   "a": 0,
+   "why": "Now, points to the main story. Long ago and Last year point back to the past."
+  },
+  {
+   "id": "x4",
+   "type": "exit",
+   "q": "Back in the main story, which verb is correct? Raj ___ up to the helper and said his name.",
+   "opts": [
+    "walked",
+    "walks",
+    "will walk"
+   ],
+   "a": 0,
+   "why": "The main story is told in the simple past, so we return to it with walked."
+  }
+ ]
+}

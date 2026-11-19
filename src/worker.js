@@ -1,4 +1,4 @@
-// Hook & Link v0.7 worker: pupil login, game API (hl.js), teacher dashboard API.
+// Hook & Link v0.6 worker: pupil login, game API (hl.js), teacher dashboard API.
 import { hl, results as hlResults, adminStories } from './hl.js';
 import PLAN from './plan.json';
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });
@@ -90,7 +90,7 @@ export default {
         else await DB.prepare('DELETE FROM plan_default WHERE class=?').bind(c).run();
         return J({ ok: 1 });
       }
-      if (path.startsWith('/api/admin/hl-stor')) return adminStories(m, path, b, DB, sa, su);
+      if (path.startsWith('/api/admin/hl-stor') || path.startsWith('/api/admin/hl-classic')) return adminStories(m, path, b, DB, sa, su);
       if (m === 'POST' && path === '/api/admin/reset-pin') {
         const p = await pupilOf(b.username), pin = cl(b.pin, 8);
         if (!p) return J({ error: 'No such pupil in your classes' }, 404);

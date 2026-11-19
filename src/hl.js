@@ -1,6 +1,8 @@
-// Hook & Link API (v0.7). Scoring is server-side; roles, ranks and reasons are sent only after a check.
+// Hook & Link API (v0.3). Scoring is server-side; roles, ranks and reasons are sent only after a check.
 import B from './scenes.json';
 import PLAN from './plan.json';
+import CL from './classic.json';
+import FL from './flow.json';
 const J = (d, s = 200) => new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });
 const RE = /\[(\w+)\|([^\]]+)\]/g, KINDS = ['object', 'action', 'feeling', 'words'];
 const ids = st => { const a = []; st.text.replace(RE, (_, i) => a.push(i)); return a; };
@@ -17,9 +19,77 @@ export async function load(DB, all) {
   const mk = (s, r, source) => ({ ...s, id: r ? r.id : s.id, source, active: !r || r.active !== 0, author: r ? r.author : '', author_name: r ? r.author_name : '' });
   for (const s of B.stories) { const r = by.get(s.id); by.delete(s.id); out.push(r && r.data ? mk({ ...JSON.parse(r.data) }, r, 'edited') : mk(s, r, 'builtin')); }
   for (const r of by.values()) if (r.data) out.push(mk(JSON.parse(r.data), r, 'custom'));
+  for (const s of CL.stories) { const r = by.get(s.id); by.delete(s.id); out.push(mk(s, r, 'builtin')); }
   return all ? out : out.filter(s => s.active);
 }
 
+
+
+// ---- v1.0: writing check, flashback entry/exit, classic story editor ----
+const STOP = new Set('that this with from they them then when what were have been will would could should there their about into over after before while which where being each very just also than some more most only like back made make down away'.split(' '));
+const stems = t => new Set((String(t).toLowerCase().match(/[a-z']+/g) || []).filter(w => w.length >= 4 && !STOP.has(w)).map(w => w.slice(0, 4)));
+const hasAny = (t, ps) => { const T = stems(t); return ps.find(p => [...stems(p)].some(w => T.has(w))) || null; };
+const sentOf = (text, id) => { const x = text.split(/(?<=[.!?])\s+/).find(y => y.includes('[' + id + '|')); return x ? x.replace(RE, '$2') : ''; };
+function writeCheck(st, part, raw) {
+  const t = String(raw || '').trim().slice(0, 240), words = (t.match(/\S+/g) || []).length, sg = st.text.split('\n===\n'), hk = part === 'hook';
+  const ideal = st.areas.find(x => (hk ? x.rank : (x.lrank || x.rank)) === 1) || st.areas[0], c = [];
+  c.push({ ok: words >= 6 && words <= 40 && /^["“A-Z]/.test(t) && /[.!?"”]$/.test(t), label: 'It is one full sentence: 6 to 40 words, a capital letter and an ending mark.' });
+  if (hk) {
+    c.push({ ok: !!hasAny(t, st.areas.map(a => txt(st, a.detail)).concat(st.areas.map(a => txt(st, a.hook)))), label: `It uses a detail from the ${st.stages ? st.stages.slice(0, 2).join(' or the ') : 'start of the flashback'}.` });
+    c.push({ ok: !/\bhad\b|last year|long ago/i.test(t), label: 'It stays in the main story. Save "had" and "last year" for the flashback.' });
+    c.push({ ok: /\b(remember\w*|remind\w*|thought of|noticed|saw|felt|smelled|heard|suddenly|eyes|looked)\b/i.test(t), label: 'It points the reader toward a memory (for example: reminded, noticed, felt, heard).' });
+  } else {
+    c.push({ ok: !!hasAny(t, st.areas.map(a => txt(st, a.ldetail || a.detail))), label: `It repeats a detail from the ${st.stages ? st.stages.slice(2).join(' or the ') : 'end of the flashback'}.` });
+    c.push({ ok: /\b(now|this time|no longer|stopped|instead|calm|brave|proud|learned|remembered|knew|decided|again|not)\b/i.test(t), label: 'It shows the character has changed (for example: now, this time, no longer, calm).' });
+    c.push({ ok: !/\bhad\b|last year|long ago/i.test(t), label: 'It is back in the main story. Save "had" and "last year" for the flashback.' });
+  }
+  return { checks: c, good: c.filter(x => x.ok).length, n: c.length, model: sentOf(hk ? sg[0] : sg[sg.length - 1], hk ? ideal.hook : ideal.link) };
+}
+function flow(m, path, b) {
+  const two = t => shuf(FL.items.filter(x => x.type === t)).slice(0, 2);
+  if (m === 'GET') return J({ items: shuf([...two('entry'), ...two('tense'), ...two('exit')]).map(x => ({ id: x.id, type: x.type, q: x.q, opts: shuf(x.opts) })) });
+  const res = Object.entries((b && b.answers) || {}).map(([id, v]) => { const x = FL.items.find(i => i.id === id); return x ? { id, ok: v === x.opts[x.a], correct: x.opts[x.a], why: x.why } : null; }).filter(Boolean);
+  return J({ got: res.filter(r => r.ok).length, n: res.length, res });
+}
+const STG = ['Trigger', 'Problem', 'Resolution', 'Lesson'], cc = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
+const WH = { b: 'opening', a: 'closing', p0: 'Trigger', p1: 'Problem', p2: 'Resolution', p3: 'Lesson' };
+function classicBuild(f) {
+  f = f || {}; const e = [], title = cc(f.title, 40), before = cc(f.before, 500), after = cc(f.after, 500), ps = STG.map((_, i) => cc((f.paras || [])[i], 400));
+  if (title.length < 3) e.push('Add a title (3 to 40 characters).');
+  if (before.length < 20) e.push('Write the opening scene in the main story (at least 20 characters).');
+  STG.forEach((n, i) => { if (ps[i].length < 15) e.push(`Write the ${n} paragraph (at least 15 characters).`); });
+  if (after.length < 20) e.push('Write the closing scene in the main story (at least 20 characters).');
+  if ([before, after, ...ps].some(x => /[\[\]|]|===/.test(x))) e.push('Do not use [ ] | or === in the story text.');
+  const seg = { b: before, p0: ps[0], p1: ps[1], p2: ps[2], p3: ps[3], a: after }, A = f.areas || [];
+  const mark = (phrase, id, label, where) => {
+    phrase = cc(phrase, 80); const nice = where.map(k => WH[k]).join(' or ');
+    if (phrase.length < 3) return e.push(`${label}: type the exact words from the story.`);
+    if (/[\[\]|]/.test(phrase)) return e.push(`${label}: do not use [ ] or |.`);
+    const n = where.reduce((c, k) => c + seg[k].split(phrase).length - 1, 0);
+    if (n === 0) return e.push(`${label}: "${phrase}" is not in the ${nice}. Copy the words exactly.`);
+    if (n > 1) return e.push(`${label}: "${phrase}" appears more than once in the ${nice}. Use a few more words so it appears once.`);
+    const k = where.find(k => seg[k].includes(phrase)); seg[k] = seg[k].replace(phrase, `[${id}|${phrase}]`);
+  };
+  const L3 = ['a', 'b', 'c'];
+  L3.forEach((l, i) => { const a = A[i] || {}, U = l.toUpperCase(); mark(a.hook, 'h' + l, `Area ${U} hook`, ['b']); mark(a.detail, 'd' + l, `Area ${U} hook detail`, ['p0', 'p1']); mark(a.link, 'l' + l, `Area ${U} link`, ['a']); mark(a.ldetail, 'e' + l, `Area ${U} link detail`, ['p2', 'p3']); });
+  [0, 1].forEach(i => mark((f.decoys || [])[i] && f.decoys[i].phrase, 'x' + (i + 1), `Decoy ${i + 1}`, ['p0', 'p1', 'p2', 'p3']));
+  if (Object.values(seg).some(x => /\[\w+\|[^\]]*\[/.test(x))) e.push('Two marked phrases overlap. Choose phrases that do not share words.');
+  const hr = A.map(a => +a.rank), lr = A.map(a => +a.lrank), ok3 = r => r.length === 3 && [1, 2, 3].every(n => r.includes(n));
+  if (!ok3(hr)) e.push('Give the three hooks the ranks 1, 2 and 3, each once.');
+  if (!ok3(lr)) e.push('Give the three links the ranks 1, 2 and 3, each once.');
+  const areas = L3.map((l, i) => { const a = A[i] || {}, U = l.toUpperCase(), o = { area: l, rank: hr[i], lrank: lr[i], hook: 'h' + l, detail: 'd' + l, link: 'l' + l, ldetail: 'e' + l, kind: a.kind };
+    if (!KINDS.includes(a.kind)) e.push(`Area ${U}: choose what the link repeats (object, action, feeling or words).`);
+    [['wh', 'Why the hook points to the flashback'], ['wr', 'Why this hook has this rank'], ['wl', 'Why the link ties back'], ['wlr', 'Why this link has this rank']].forEach(([k, n]) => { o[k] = cc(a[k], 220); if (o[k].length < 8) e.push(`Area ${U}: write "${n}" (at least 8 characters).`); }); return o; });
+  const dec = {}; [0, 1].forEach(i => { dec['x' + (i + 1)] = cc(((f.decoys || [])[i] || {}).why, 200); if (dec['x' + (i + 1)].length < 8) e.push(`Decoy ${i + 1}: explain why it is not repeated (at least 8 characters).`); });
+  return { errors: e, story: { type: 'classic', title, stages: STG, text: seg.b + '\n===\n' + [seg.p0, seg.p1, seg.p2, seg.p3].join('\n\n') + '\n===\n' + seg.a, areas, decoys: dec } };
+}
+function classicToForm(st) {
+  if (!st.stages || st.stages.length !== 4) return null;
+  const sg = st.text.split('\n===\n'), un = t => t.replace(RE, '$2'), ph = id => { const m = st.text.match(new RegExp('\\[' + id + '\\|([^\\]]+)\\]')); return m ? m[1] : ''; };
+  return { id: st.id, title: st.title, before: un(sg[0]), paras: sg[1].split('\n\n').map(un), after: un(sg[2]),
+    areas: st.areas.map(a => ({ area: a.area, hook: ph(a.hook), detail: ph(a.detail), link: ph(a.link), ldetail: ph(a.ldetail || a.detail), kind: a.kind, rank: a.rank, lrank: a.lrank || a.rank, wh: a.wh, wr: a.wr, wl: a.wl, wlr: a.wlr || '' })),
+    decoys: ['x1', 'x2'].map(k => ({ phrase: ph(k), why: st.decoys[k] || '' })) };
+}
 
 // ---- Planning (v0.6): story mountain and 8-point arc. Shape = pupil's own choice, else class default, else school default, else mountain. ----
 export async function shapeOf(DB, pid) {
@@ -69,8 +139,7 @@ async function plan(m, path, b, DB, pid) {
 }
 
 const NAMES = { ha: 'Hook A', hb: 'Hook B', hc: 'Hook C', la: 'Link A', lb: 'Link B', lc: 'Link C', x1: 'Decoy 1', x2: 'Decoy 2' };
-const LAB = { memory: 'Memory', line: 'One-line memory', wh: 'Why it is a hook', wr: 'Why this rank', wl: 'Why it is a link' };
-const WHOLE = { present: 'Present story', hook: 'Hook', flashback: 'Flashback', back: 'Link back' };
+const LAB = { memory: 'Memory', wh: 'Why it is a hook', wr: 'Why this rank', wl: 'Why it is a link', back: 'Back to now' };
 const wc = s => s.trim().split(/\s+/).filter(Boolean).length;
 export function validate(r) {
   const e = []; r = r || {};
@@ -87,20 +156,19 @@ export function validate(r) {
     const a = A.find(x => x && x.area === l) || {}, rank = +a.rank, kind = String(a.kind || ''), U = l.toUpperCase(), f = {};
     if (![1, 2, 3].includes(rank)) e.push(`Area ${U}: choose a rank.`); else ranks.push(rank);
     if (!KINDS.includes(kind)) e.push(`Area ${U}: choose the kind of link.`);
-    for (const k of ['memory', 'line', 'wh', 'wr', 'wl']) { f[k] = String(a[k] || '').trim(); const max = k === 'line' ? 140 : 400; if (f[k].length < 8 || f[k].length > max) e.push(`Area ${U}: "${LAB[k]}" needs 8 to ${max} characters.`); }
+    for (const k of ['memory', 'wh', 'wr', 'wl', 'back']) { f[k] = String(a[k] || '').trim(); if (f[k].length < 8 || f[k].length > 400) e.push(`Area ${U}: "${LAB[k]}" needs 8 to 400 characters.`); }
+    if (/[\[\]|]/.test(f.memory + f.back)) e.push(`Area ${U}: do not use [ ] or | in the memory or the back-to-now line.`);
     if (pos['h' + l] !== undefined && pos['l' + l] !== undefined && pos['h' + l] > pos['l' + l]) e.push(`Area ${U}: the hook must come before its link in the story.`);
     areas.push({ area: l, rank, hook: 'h' + l, link: 'l' + l, kind, ...f });
   }
   if (ranks.length === 3 && new Set(ranks).size !== 3) e.push('Use each rank once: 1 Ideal, 2 Good, 3 Workable.');
   const D = r.decoys || {}, decoys = {};
   for (const k of ['x1', 'x2']) { decoys[k] = String(D[k] || '').trim(); if (decoys[k].length < 8 || decoys[k].length > 200) e.push(`${NAMES[k]}: explain why it is not a hook (8 to 200 characters).`); }
-  // Optional model story for the ideal area: present story, hook, flashback, link back. All four or none.
-  const Wr = r.whole || {}, whole = {}, filled = Object.keys(WHOLE).filter(k => String(Wr[k] || '').trim());
-  if (filled.length) for (const k of Object.keys(WHOLE)) { whole[k] = String(Wr[k] || '').trim(); if (whole[k].length < 20 || whole[k].length > 700) e.push(`Whole story: "${WHOLE[k]}" needs 20 to 700 characters (fill in all four parts, or leave all four empty).`); }
-  const story = { title, text, areas, decoys }; if (filled.length) story.whole = whole;
-  return { errors: e, story };
+  return { errors: e, story: { title, text, areas, decoys } };
 }
 
+const stageOf = (st, id) => { if (!st.stages || !id) return ''; const i = st.text.split('\n===\n')[1].split('\n\n').findIndex(p => p.includes('[' + id + '|')); return i >= 0 ? st.stages[i] : ''; };
+const tease = m => (String(m).match(/^.*?[.!?](?=\s|$)/) || [String(m)])[0];
 const txt = (st, id) => { const m = st.text.match(new RegExp('\\[' + id + '\\|([^\\]]+)\\]')); return m ? m[1] : ''; };
 const shuf = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const BADGES = [
@@ -108,7 +176,7 @@ const BADGES = [
   ['first-link', '🔗', 'First Link', 'Finish Make the Link on any story.'],
   ['triple-hook', '🎯', 'Triple Hook', 'Get 3 stars on a Spot the Hook story.'],
   ['perfect-link', '🧵', 'Perfect Link', 'Get 3 stars on a Make the Link story.'],
-  ['ideal-eye', '🌟', 'Ideal Eye', 'Pick the ideal hook in 5 different stories.'],
+  ['ideal-eye', '🌟', 'Ideal Eye', 'Tap the ideal hook first in 5 different stories.'],
   ['both-doors', '🚪', 'Both Doors', 'Play Spot the Hook and Make the Link on the same story.'],
   ['comeback', '💪', 'Comeback', 'Try a story again and win 3 stars.'],
   ['hook-master', '🏆', 'Hook Master', 'Get 3 stars on every Spot the Hook story.'],
@@ -117,17 +185,19 @@ const BADGES = [
 ];
 export async function hl(m, path, b, DB, pid) {
   if (path.startsWith('/api/hl/plan')) return plan(m, path, b, DB, pid);
+  if (path === '/api/hl/flow' || path === '/api/hl/flow-check') return flow(m, path, b);
   const L = await load(DB), find = id => L.find(s => s.id === id);
+  if (m === 'POST' && path === '/api/hl/write-check') { const st = find(b.story); if (!st || st.type !== 'classic') return J({ error: 'No such story' }, 404); if (!['hook', 'link'].includes(b.part)) return J({ error: 'Choose hook or link' }, 400); return J(writeCheck(st, b.part, b.text)); }
   if (m === 'GET' && path === '/api/hl/stories') {
     const r = (await DB.prepare('SELECT mode,story,stars FROM hl_stars WHERE pupil_id=?').bind(pid).all()).results;
-    return J({ stories: L.map(s => ({ id: s.id, title: s.title })), stars: r });
+    return J({ stories: L.map(s => ({ id: s.id, title: s.title, type: s.type || 'embedded' })), stars: r });
   }
   if (m === 'GET' && path.startsWith('/api/hl/story/')) {
     const st = find(path.split('/')[4]); if (!st) return J({ error: 'No such story' }, 404);
-    const o = { id: st.id, title: st.title, text: pub(st) };
-    // One line per memory, shuffled so the order does not give away which hook opens which memory.
-    o.memories = shuf(st.areas.map(a => a.line || a.memory));
+    const o = { id: st.id, title: st.title, text: pub(st), type: st.type || 'embedded' };
+    if (st.type === 'classic') return J({ ...o, stages: st.stages || null });
     if (path.endsWith('/link')) o.areas = st.areas.map(a => ({ area: a.area, hook: tk(st, a.hook), memory: a.memory }));
+    else o.clues = shuf(st.areas.map(a => ({ t: tk(st, a.hook), hook: txt(st, a.hook), clue: tease(a.memory) })));
     return J(o);
   }
   if (m === 'GET' && path === '/api/hl/badges') {
@@ -147,7 +217,7 @@ export async function hl(m, path, b, DB, pid) {
     return J({ badges: BADGES.map(([id, icon, name, desc]) => ({ id, icon, name, desc, earned: !!ok[id], prog: prog[id] || '' })) });
   }
   if (m === 'GET' && path === '/api/hl/mix') {
-    const pick = shuf(L.filter(s => s.areas.length === 3)).slice(0, 6);
+    const pick = shuf(L.filter(s => s.type !== 'classic' && s.areas.length === 3)).slice(0, 6);
     if (pick.length < 2) return J({ error: 'Not enough stories for a Mixed Round yet' }, 400);
     const round = pick.length + Math.random().toString(36).slice(2, 9).padEnd(7, 'x');
     const cards = pick.map((st, i) => {
@@ -180,29 +250,50 @@ export async function hl(m, path, b, DB, pid) {
     return J({ stars, got, n, rank: by('rank'), kind: by('kind') });
   }
   if (m === 'POST' && path === '/api/hl/check-hook') {
-    // v0.7: the pupil picks ONE hook, the one that opens the best memory. 3 stars = ideal, 2 = good, 1 = workable, 0 = not a hook (try again).
     const st = find(b.story); if (!st) return J({ error: 'No such story' }, 404);
-    const tap = String(Array.isArray(b.taps) ? b.taps[0] : b.tap || ''), id = /^t\d{1,3}$/.test(tap) ? tid(st, tap) : undefined;
-    if (!id) return J({ error: 'Tap one hook in the story first' }, 400);
-    const a = st.areas.find(x => x.hook === id), best = st.areas.find(x => x.rank === 1), rank = a ? a.rank : 0;
-    let r = 'no', why = st.decoys[id] || 'Nothing in the memories connects to this.';
-    if (a) { r = 'hook'; why = a.wh; }
-    else if (st.areas.some(x => x.link === id)) { r = 'link'; why = 'This is a link, not a hook. A link comes later, where the memory ties back to the story.'; }
-    const stars = rank ? 4 - rank : 0;
-    await log(DB, pid, 'hook', st.id, rank ? String(rank) : '-', tap, r);
-    await log(DB, pid, 'hook', st.id, 'first', tap, rank ? String(rank) : 'x');
-    if (stars) await save(DB, pid, 'hook', st.id, stars);
-    const areas = st.areas.map(x => ({ t: tk(st, x.hook), rank: x.rank, hook: txt(st, x.hook), line: x.line || x.memory, why: x.wh, wr: x.wr })).sort((p, q) => p.rank - q.rank);
-    const ideal = { t: tk(st, best.hook), hook: txt(st, best.hook), link: txt(st, best.link), line: best.line || best.memory, memory: best.memory, whole: st.whole || null };
-    return J({ r, rank, why, wr: a ? a.wr : '', line: a ? (a.line || a.memory) : '', tap, stars, areas, ideal, fit: fit(st, (await shapeOf(DB, pid)).shape, 'hook', 'hook') });
+    const t = Array.isArray(b.taps) ? b.taps[0] : b.pick; if (!t) return J({ error: 'Pick one hook first' }, 400);
+    if (st.type === 'classic') {
+      if (!b.detail) return J({ error: 'Now tap the matching detail in the flashback' }, 400);
+      const id = tid(st, t), a = st.areas.find(x => x.hook === id), dt = tid(st, b.detail), dOk = !!a && dt === a.detail, late = st.areas.find(x => x.ldetail === dt);
+      const base = a ? (a.rank === 1 ? 3 : a.rank === 2 ? 2 : 1) : 1, stars = a && !dOk ? Math.max(1, base - 1) : base;
+      const res = a ? { t, r: 'hook', rank: a.rank, why: a.wh, wr: a.wr } : { t, r: 'no', why: 'This does not lead into the flashback. A hook is a detail in the present that pulls the character back to the past.' };
+      await log(DB, pid, 'hook', st.id, a ? String(a.rank) : '-', t, res.r);
+      await log(DB, pid, 'hook', st.id, 'first', t, a ? String(a.rank) : 'x');
+      if (a && !dOk) await log(DB, pid, 'hook', st.id, 'd', String(b.detail).slice(0, 4), 'no');
+      await save(DB, pid, 'hook', st.id, stars);
+      const areas = st.areas.map(x => ({ rank: x.rank, ht: tk(st, x.hook), hook: txt(st, x.hook), detail: txt(st, x.detail), stage: stageOf(st, x.detail), why: x.wh, wr: x.wr })).sort((x, y) => x.rank - y.rank);
+      return J({ classic: 1, res, stars, detail: { ok: dOk, t: a ? tk(st, a.detail) : null, text: a ? txt(st, a.detail) : '', stage: a ? stageOf(st, a.detail) : '', why: late ? `That detail is in the ${stageOf(st, dt)}. A hook points to something in the ${st.stages.slice(0, 2).join(' or the ')}.` : (st.decoys[dt] || '') }, areas });
+    }
+    const id = tid(st, t), a = st.areas.find(x => x.hook === id);
+    let res;
+    if (a) res = { t, r: 'hook', rank: a.rank, why: a.wh, wr: a.wr };
+    else if (st.areas.some(x => x.link === id)) res = { t, r: 'link', why: 'This is a link, not a hook. A link comes later, where the memory ties back to the story.' };
+    else res = { t, r: 'no', why: st.decoys[id] || 'Nothing in the memories connects to this.' };
+    const stars = a ? (a.rank === 1 ? 3 : a.rank === 2 ? 2 : 1) : 1;
+    await log(DB, pid, 'hook', st.id, a ? String(a.rank) : '-', t, res.r);
+    await log(DB, pid, 'hook', st.id, 'first', t, a ? String(a.rank) : 'x');
+    await save(DB, pid, 'hook', st.id, stars);
+    const areas = st.areas.map(x => ({ t: tk(st, x.hook), rank: x.rank, hook: txt(st, x.hook), memory: x.memory, back: x.back || '', why: x.wh, wr: x.wr })).sort((x, y) => x.rank - y.rank);
+    return J({ res, areas, stars, fit: fit(st, (await shapeOf(DB, pid)).shape, 'hook', 'hook') });
+  }
+  if (m === 'POST' && path === '/api/hl/check-link' && (find(b.story) || {}).type === 'classic') {
+    const st = find(b.story), id = tid(st, b.tap), a = st.areas.find(x => x.link === id), dt = tid(st, b.detail), kind = KINDS.includes(b.kind) ? b.kind : '';
+    if (!b.detail || !kind) return J({ error: 'Tap the part of the flashback, then say what is the same' }, 400);
+    const ld = a ? (a.ldetail || a.detail) : null, early = st.stages && st.areas.find(x => x.detail === dt);
+    let r = 'no'; if (a && dt === ld) r = kind === a.kind ? 'ok' : 'kind';
+    const lr = a ? (a.lrank || a.rank) : 0, base = a ? (lr === 1 ? 3 : lr === 2 ? 2 : 1) : 1, stars = !a || r === 'no' ? 1 : r === 'ok' ? base : Math.max(1, base - 1);
+    await log(DB, pid, 'link', st.id, a ? a.area : '-', String(b.tap).slice(0, 4), r);
+    await save(DB, pid, 'link', st.id, stars);
+    const why = !a ? 'This is not a link back to the flashback. A link is a detail in the present that repeats something from the flashback.' : a.wl + (r === 'kind' ? ` It is a "same ${a.kind}" link.` : r === 'no' ? (early ? ` The part you tapped is in the ${stageOf(st, dt)}. A link repeats something from the ${st.stages.slice(2).join(' or the ')}.` : ' The flashback detail you tapped is not the one it repeats.') : '');
+    return J({ classic: 1, r, stars, rank: lr, wr: a ? (a.wlr || a.wr) : '', why, ans: a ? { detail: tk(st, ld), kind: a.kind, stage: stageOf(st, ld) } : null, areas: st.areas.map(x => ({ rank: x.lrank || x.rank, lt: tk(st, x.link), link: txt(st, x.link), detail: txt(st, x.ldetail || x.detail), stage: stageOf(st, x.ldetail), kind: x.kind, wr: x.wlr || x.wr })).sort((x, y) => x.rank - y.rank) });
   }
   if (m === 'POST' && path === '/api/hl/check-link') {
     const st = find(b.story), a = st && st.areas.find(x => x.area === b.area); if (!a) return J({ error: 'No such area' }, 404);
     const id = tid(st, b.tap), kind = KINDS.includes(b.kind) ? b.kind : '';
     let r = 'no', why = st.decoys[id] || 'This detail does not connect to the memory.';
-    if (id === a.link) { r = kind === a.kind ? 'ok' : 'kind'; why = a.wl + (r === 'kind' ? ` What is the same here is the ${a.kind}.` : ''); }
+    if (id === a.link) { r = kind === a.kind ? 'ok' : 'kind'; why = a.wl + (r === 'kind' ? ` It is a "same ${a.kind}" link.` : ''); }
     await log(DB, pid, 'link', st.id, a.area, String(b.tap).slice(0, 4), r);
-    return J({ r, why, rank: a.rank, wr: a.wr, ans: tk(st, a.link), kind: a.kind });
+    return J({ r, why, rank: a.rank, wr: a.wr, ans: tk(st, a.link), kind: a.kind, back: a.back || '' });
   }
   if (m === 'POST' && path === '/api/hl/link-finish') {
     const st = find(b.story); if (!st) return J({ error: 'No such story' }, 404);
@@ -220,13 +311,28 @@ export async function hl(m, path, b, DB, pid) {
 export async function adminStories(m, path, b, DB, sa, su) {
   const who = su ? 'admin' : 't' + sa.pupil_id, L = await load(DB, true);
   const can = s => su || (s.source === 'custom' && s.author === who), find = id => L.find(s => s.id === String(id || ''));
-  if (m === 'GET' && path === '/api/admin/hl-stories') return J({ stories: L.map(s => ({ ...s, canEdit: can(s), canHide: can(s) })) });
+  if (m === 'GET' && path === '/api/admin/hl-stories') return J({ stories: L.map(s => ({ ...s, canEdit: can(s) && (s.type !== 'classic' || s.source === 'custom'), canHide: can(s) })) });
   if (m !== 'POST') return J({ error: 'Not found' }, 404);
   if (path === '/api/admin/hl-story-check') return J({ errors: validate(b.story).errors });
+  if (path === '/api/admin/hl-classic-check') return J({ errors: classicBuild(b.form).errors });
+  if (path === '/api/admin/hl-classic-form') { const c = find(b.id), f = c && c.type === 'classic' ? classicToForm(c) : null; if (!f) return J({ error: 'This story has no stages. Copy one of the stories with Trigger, Problem, Resolution and Lesson.' }, 400); return J({ form: b.copy ? { ...f, id: '', title: (f.title + ' (copy)').slice(0, 40) } : f }); }
+  if (path === '/api/admin/hl-classic-save') {
+    const v = classicBuild(b.form); if (v.errors.length) return J({ error: v.errors[0], errors: v.errors }, 400);
+    let id = String((b.form || {}).id || ''), cur = id ? find(id) : null;
+    if (id && !cur) return J({ error: 'No such story' }, 404);
+    if (cur && (cur.type !== 'classic' || cur.source !== 'custom')) return J({ error: 'Built-in stories cannot be edited. Use Copy to make your own version.' }, 400);
+    if (cur && !can(cur)) return J({ error: 'You can only edit your own stories' }, 403);
+    if (!cur) id = 'c' + crypto.randomUUID().slice(0, 8);
+    const name = su ? 'Admin' : ((await DB.prepare('SELECT username FROM teachers WHERE id=?').bind(sa.pupil_id).first()) || {}).username || 'teacher';
+    await DB.prepare('INSERT INTO hl_stories(id,data,active,author,author_name) VALUES(?,?,1,?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data').bind(id, JSON.stringify(v.story), who, name).run();
+    return J({ ok: 1, id });
+  }
   if (path === '/api/admin/hl-story-save') {
+    if ((find((b.story || {}).id) || {}).type === 'classic') return J({ error: 'The Classic Linked Flashback stories cannot be edited yet. You can hide them.' }, 400);
     const v = validate(b.story); if (v.errors.length) return J({ error: v.errors[0], errors: v.errors }, 400);
     let id = String((b.story || {}).id || ''), cur = id ? find(id) : null;
     if (id && !cur) return J({ error: 'No such story' }, 404);
+    if (cur && cur.type === 'classic') return J({ error: 'The Classic Linked Flashback stories cannot be edited yet. You can hide them.' }, 400);
     if (cur && !can(cur)) return J({ error: 'You can only edit your own stories' }, 403);
     if (!cur) id = 'c' + crypto.randomUUID().slice(0, 8);
     const name = su ? 'Admin' : ((await DB.prepare('SELECT username FROM teachers WHERE id=?').bind(sa.pupil_id).first()) || {}).username || 'teacher';
@@ -252,7 +358,7 @@ export async function adminStories(m, path, b, DB, sa, su) {
 // ---- Teacher: results (v0.3). sc = {q,b}: WHERE fragment on alias p (pupils), already limited to the teacher's classes ----
 const HINTS = {
   none: ['Not started yet', 'Ask them to try one story in each game.'],
-  weak: ['Often picks a weak hook', 'Revisit why a personal object or a sense is a stronger hook than a place. Compare the memories: which one would help the character most with the problem in the story?'],
+  weak: ['Picks a weak hook first', 'Revisit why a personal object or a sense is a stronger hook than a place. Compare the Ideal and Workable hooks in one story.'],
   mix: ['Mixes up hooks and links', 'Teach the order: a hook comes first and opens the memory; a link comes later and ties it back to the story.'],
   decoy: ['Taps scene details that are not triggers', 'Ask: does this detail remind the character of something that really happened to them?'],
   rankcard: ['Often misses the ideal hook in the Mixed Round', 'Put an Ideal and a Workable hook from one story side by side. Ask why a personal object or sense, noticed at the moment of choice, beats a place.'],
